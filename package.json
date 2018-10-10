@@ -1,0 +1,16 @@
+{
+  "name": "Largo",
+  "version": "1.0.0",
+  "description": "transcribe",
+  "main": "app.js",
+  "author": "TK Yoon",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "moment": "^2.22.2",
+    "mongoose": "^5.3.2",
+    "winston": "^3.1.0",
+    "winston-daily-rotate-file": "^3.3.3"
+  }
+}
