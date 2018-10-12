@@ -8,8 +8,10 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "ip": "^1.1.5",
     "moment": "^2.22.2",
     "mongoose": "^5.3.2",
+    "tracer": "^0.9.1",
     "winston": "^3.1.0",
     "winston-daily-rotate-file": "^3.3.3"
   }

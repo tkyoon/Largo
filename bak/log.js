@@ -31,6 +31,7 @@ var logger = winston.createLogger({
         new (winston.transports.Console)({
             name: 'debug-console',
             level: 'debug',
+            depth:true,
 //            timestamp: timeStampFormat,
 //            json: false,
 //            format : winston.format.combine(
@@ -44,7 +45,7 @@ var logger = winston.createLogger({
             	winston.format.timestamp({
             		format: 'YYYY-MM-DD HH:mm:ss.SSS'
             	})
-            	, winston.format.printf(info => `[${info.timestamp}(${info.level})]:${info.message}`)
+            	, winston.format.printf(info => `[${info.timestamp}(${info.level}${info.depth)]:${info.message}`)
             )
         })
     ],
