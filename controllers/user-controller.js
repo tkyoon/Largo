@@ -3,7 +3,8 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({ extended:true }));
 
-var user = require('./models/user');
+var log = require('../logger');
+var user = require('../models/user');
 
 /**
  * 사용자 등록

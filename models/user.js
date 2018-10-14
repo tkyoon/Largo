@@ -12,5 +12,5 @@ var userSchema = new mongoose.Schema({
     , isLeave		 	: { type: Boolean, default: false } //탈퇴여부
 }, { collection: 'tb_user' });
 
-mongoose.model('user', userSchema);
-module.exports = mongoose.model('user');
+var user = mongoose.model('user', userSchema);
+module.exports = user;

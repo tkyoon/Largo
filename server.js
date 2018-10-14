@@ -13,8 +13,12 @@ var express = require('express');
 var app = express();
 
 /** user controller 연결  [TK Yoon 2018. 10. 12. 오전 8:25:43] */
-//var UserController = require('./user/UserController');
-//app.use('/users', UserController);
+var userController = require('./controllers/user-controller');
+app.use('/users', userController);
+
+/** 로그인 controller 연결  [TK Yoon 2018. 10. 14. 오후 10:28:43] */
+var loginController = require('./controllers/login-controller');
+app.use('/', loginController);
 
 
 var ip 		= require("ip");
