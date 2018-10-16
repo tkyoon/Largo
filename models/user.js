@@ -10,6 +10,7 @@ var userSchema = new mongoose.Schema({
     , genter		 	: String
     , socialType	 	: String
     , isLeave		 	: { type: Boolean, default: false } //탈퇴여부
+	, regDate		 	: { type: Date, default: Date.now }
 }, { collection: 'tb_user' });
 
 var user = mongoose.model('user', userSchema);
