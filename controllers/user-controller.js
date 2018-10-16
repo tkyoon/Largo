@@ -3,7 +3,7 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({ extended:true }));
 
-var log = require('../logger');
+var log 		= require('../util/logger');
 var user = require('../models/user');
 
 /**

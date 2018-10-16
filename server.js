@@ -4,7 +4,7 @@
 
 
 /** logger tracer 사용  [TK Yoon 2018. 10. 12. 오전 10:16:18] */
-var log = require('./logger');
+var log 		= require('./util/logger');
 
 /** mongodb-atlas 연결  [TK Yoon 2018. 10. 12. 오전 8:25:43] */
 var db = require('./db');

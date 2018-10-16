@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var log = require('./logger');
+var log 		= require('./util/logger');
 
 var uri = 'mongodb+srv://pilsa:pilsa@plisa-fuc3q.mongodb.net/pilsa_db?retryWrites=true';
 /**
