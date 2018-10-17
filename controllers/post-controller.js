@@ -5,23 +5,44 @@ router.use(bodyParser.urlencoded({ extended:true }));
 
 var log 		= require('../util/logger');
 var util 		= require('../util/util');
-var userModel 	= require('../models/user');
-var accessModel = require('../models/access');
 var retVo 		= require('../util/return');
 
+var postModel 	= require('../models/post');
+
 /**
- * 로그인
+ * 글감 등록
  * @param req
  * @param res
  * @returns user object
  */ 
-router.post('/signin', function(req, res) {
-	var bizNm = '로그인 ';
+router.post('/', function(req, res) {
+	var bizNm = '글감 등록 ';
 	log.info(bizNm + '호출 %j', req.body);
 	
-	if (!req.body.userId || !req.body.userPw) {
-		return res.status(401).send(retVo.return(-1, '아이디 또는 비밀번호를 입력해주세요.'));
+	if (!req.body.title || !req.body.contents || !req.body.quatation || !req.body.regId) {
+		return res.status(401).send(retVo.return(-1, '필수 입력값을 확인해주세요.'));
 	}
+	
+	var tags = new Array();
+	
+	postModel.create({
+		title 				: req.body.title
+		, contents 			: req.body.contents
+	    , quatation 		: req.body.quatation
+	    , tag	 			: tags
+	    , regId 			: req.body.regId
+	}
+	, function(err, post) {
+		if (err) {
+			log.error(bizNm + '에러!', err);
+			return res.status(500).send(retVo.return(-1, bizNm + '에러!', err));
+		}
+		
+		log.info(bizNm + '성공 %j', post);
+		return res.status(200).send(retVo.return(1, bizNm + '성공', user));
+		
+	});
+	
 	
 	userModel.findOne({
         userId 				: req.body.userId
@@ -31,22 +52,19 @@ router.post('/signin', function(req, res) {
     , function(err, user) {
     	if (err) {
     		log.error(bizNm + '에러!', err);
-    		return retVo.returnErrorRes(res, bizNm + '에러!', err)
-    		return res.status(500).send(retVo.return(-1, bizNm + '에러!', err));
+    		return res.status(500).send(bizNm + '에러!');
     	}
     	
     	if(user) {
     		log.info(bizNm + '성공 %j', user);
-    		accessModel.insertAccessLog(req.body.userId, true, util.getClientIp(req));
     		return res.status(200).send(retVo.return(1, bizNm + '성공', user));
     		
     	} else {
     		log.warn(bizNm + '실패 %j', req.body);
-    		accessModel.insertAccessLog(req.body.userId, false, util.getClientIp(req));
+    		insertAccessLog(req.body.userId, false, util.getClientIp(req));
     		return res.status(403).send(retVo.return(-1, '아이디 또는 비밀번호를 확인해주세요.'));
     		
     	}
-    	
     });
 });
 
@@ -89,7 +107,7 @@ router.post('/signup', function(req, res) {
     	, function(err, user) {
     		if (err) {
     			log.error(bizNm + '에러!', err);
-    			return res.status(500).send(retVo.return(-1, bizNm + '에러!', err));
+    			return res.status(500).send(retVo.return(1, bizNm + '에러!', err));
     		}
     		
     		if(user) {
@@ -106,5 +124,27 @@ router.post('/signup', function(req, res) {
 	
 	
 });
+
+/**
+ * access log 등록
+ * @param id : 사용자 아이디
+ * @param isSuccess : 성공/실패, true/false
+ * @param ip : 사용자 접속 아이피
+ * @returns
+ */
+function insertAccessLog(id, isSuccess, ip){
+	accessModel.create({
+		userId: id
+		, isSuccess : isSuccess
+        , ip : ip
+    }
+    , function(err, user) {
+        if (err) {
+        	log.error('접속로그 저장 실패!', err);
+        }
+        
+        log.info('$ 접속로그 저장 %s, %s, %s', id, isSuccess, ip);
+    });
+}
 
 module.exports = router;

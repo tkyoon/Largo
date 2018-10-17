@@ -20,6 +20,9 @@ app.use('/users', userController);
 var loginController = require('./controllers/login-controller');
 app.use('/', loginController);
 
+/** post controller 연결  [TK Yoon 2018. 10. 18. 오전 4:31:46] */
+var postController = require('./controllers/post-controller');
+app.use('/posts', postController);
 
 var ip 		= require("ip");
 var port 	= process.env.PORT || 8600;

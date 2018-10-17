@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var timeZone = require('mongoose-timezone');
 
 var userSchema = new mongoose.Schema({
     userId 				: String
@@ -13,9 +12,12 @@ var userSchema = new mongoose.Schema({
     , socialType	 	: String
     , isLeave		 	: { type: Boolean, default: false } //탈퇴여부
 	, regDate		 	: { type: Date, default: Date.now }
-}, { collection: 'tb_user' });
-
-userSchema.plugin(timeZone, { paths: ['regDate'] });
+//	, _id: {type: mongoose.Schema.Types.ObjectId, auto: true} //리턴값에 _id 넘어옴 
+}
+, {
+	collection: 'tb_user' 
+//	, _id: false
+});
 
 var user = mongoose.model('user', userSchema);
 module.exports = user;

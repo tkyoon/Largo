@@ -13,3 +13,7 @@ exports.getClientIp = function(req) {
 	
 	return ip;
 }
+
+//로컬시간 구하기
+//var local = new Date( user.regDate.getTime() -  ( new Date().getTimezoneOffset() * 60000 ) )
+//log.debug(local);
