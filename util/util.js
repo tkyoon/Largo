@@ -8,10 +8,16 @@ var log 		= require('./logger');
 exports.getClientIp = function(req) {
 	var ip = req.headers['x-forwarded-for'] ||
     req.connection.remoteAddress ||
-    req.socket.remoteAddress ||
-    req.connection.socket.remoteAddress;
+    req.socket.remoteAddress 
+//    || req.connection.socket.remoteAddress
+    ;
 	
 	return ip;
+}
+
+
+exports.isEmpty = function(value) {
+  return typeof value == 'string' && !value.trim() || typeof value == 'undefined' || value === null;
 }
 
 //로컬시간 구하기
