@@ -74,37 +74,53 @@ router.get('/', function(req, res) {
 //	}
 	
 	var rows = parseInt(req.query.rows) || 10;
-	var page = 0;
-	if(!util.isEmpty(req.query.page)){
-		page = parseInt(req.query.page) - 1; 
-	}
+	var page = 1;
 	
-	log.debug(page)
+//	mongoose-paginate 사용하지 않을 경우 skip 0부터 시작일 경우
+//	if(!util.isEmpty(req.query.page)){
+//		page = parseInt(req.query.page) - 1; 
+//	}
 	
 	var fields = {};
 	var sort = {};
 	var paging = {
-		skip : page * rows
+		page : page
 		, limit : rows
+		, populate: 'posts'
 	};
 	
-	log.debug(paging)
-	
+	//검색조건에 들어가지 않도록 null 처리
 	req.query.page = null;
 	req.query.rows = null;
 	
-	postModel.find(req.query
-		, fields
+	postModel.paginate(req.query
 		, paging
-		, function (err, post) {
-    	if (err) {
-    		log.error(bizNm + '에러!', err);
-			return retObj.returnErrorRes(res, bizNm + '에러!', err);
-    	}
-    	
-    	log.info(bizNm + '성공 %j', post);
-    	return retObj.returnSuccessRes(res, bizNm + '성공', post);
-    });
+		, function (err, posts) {
+			if (err) {
+				log.error(bizNm + '에러!', err);
+				return retObj.returnErrorRes(res, bizNm + '에러!', err);
+			}
+			
+			log.info(bizNm + '성공 %j', posts);
+			posts.posts = posts.docs;
+			delete posts.docs;
+	    	return retObj.returnSuccessRes(res, bizNm + '성공', posts);
+		}
+	);
+	
+	
+//	postModel.find(req.query
+//		, fields
+//		, paging
+//		, function (err, post) {
+//    	if (err) {
+//    		log.error(bizNm + '에러!', err);
+//			return retObj.returnErrorRes(res, bizNm + '에러!', err);
+//    	}
+//    	
+//    	log.info(bizNm + '성공 %j', post);
+//    	return retObj.returnSuccessRes(res, bizNm + '성공', post);
+//    });
 });
 
 /**

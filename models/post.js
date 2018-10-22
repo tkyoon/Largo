@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var mongoosePaginate = require('mongoose-paginate');
 
 var postSchema = new mongoose.Schema({
 	postId				: String
@@ -16,6 +17,7 @@ var postSchema = new mongoose.Schema({
 	, coverImage		: String
 }, { collection: 'tb_post' });
 
+postSchema.plugin(mongoosePaginate);
 
 var post = mongoose.model('post', postSchema);
 module.exports = post;
