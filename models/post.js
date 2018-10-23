@@ -1,6 +1,9 @@
 var mongoose = require('mongoose');
 var mongoosePaginate = require('mongoose-paginate');
 
+//DeprecationWarning: collection.findAndModify is deprecated. Use findOneAndUpdate, findOneAndReplace or findOneAndDelete instead. 설정 추가
+mongoose.set('useFindAndModify', false);
+
 var postSchema = new mongoose.Schema({
 	postId				: String
     , title 			: String

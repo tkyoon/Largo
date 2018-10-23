@@ -77,16 +77,16 @@ router.get('/', function(req, res) {
 	var page = 1;
 	
 //	mongoose-paginate 사용하지 않을 경우 skip 0부터 시작일 경우
-//	if(!util.isEmpty(req.query.page)){
-//		page = parseInt(req.query.page) - 1; 
-//	}
+	if(!util.isEmpty(req.query.page)){
+		page = parseInt(req.query.page); 
+	}
 	
 	var fields = {};
-	var sort = {};
+	var sort = { modDate : -1 }; //modDate desc 정렬
 	var paging = {
 		page : page
 		, limit : rows
-		, populate: 'posts'
+		, sort: sort
 	};
 	
 	//검색조건에 들어가지 않도록 null 처리
@@ -108,19 +108,6 @@ router.get('/', function(req, res) {
 		}
 	);
 	
-	
-//	postModel.find(req.query
-//		, fields
-//		, paging
-//		, function (err, post) {
-//    	if (err) {
-//    		log.error(bizNm + '에러!', err);
-//			return retObj.returnErrorRes(res, bizNm + '에러!', err);
-//    	}
-//    	
-//    	log.info(bizNm + '성공 %j', post);
-//    	return retObj.returnSuccessRes(res, bizNm + '성공', post);
-//    });
 });
 
 /**
@@ -143,5 +130,49 @@ router.get('/:id', function(req, res) {
     	return retObj.returnSuccessRes(res, bizNm + '성공', post);
     });
 });
+
+/**
+ * 글감 수정
+ * @param req
+ * @param res
+ * @returns
+ */
+router.put('/:id', function (req, res) {
+	var bizNm = '글감 수정 ';
+	log.info(bizNm + '호출 %j %j', req.params, req.body);
+	
+	//필수값 체크
+	if (!req.body.regId) {
+		return retObj.returnBadReqRes(res, '필수값을 입력해주세요.');
+	}
+	
+	req.body.modDate = new Date();
+	postModel.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, post) {
+		if (err) {
+    		log.error(bizNm + '에러!', err);
+			return retObj.returnErrorRes(res, bizNm + '에러!', err);
+    	}
+		
+		log.info(bizNm + '성공 %j', post);
+    	return retObj.returnSuccessRes(res, bizNm + '성공', post);
+    });
+});
+
+/**
+ * 글감삭제
+ * @param req
+ * @param res
+ * @returns
+ */
+router.delete('/:id', function (req, res) {
+	var bizNm = '글감 삭제 ';
+	log.info(bizNm + '호출 %j', req.params);
+	
+	user.findByIdAndRemove(req.params.id, function (err, user) {
+        if (err) return res.status(500).send("User 삭제 실패");
+        res.status(200).send("User "+ user.name +" 삭제됨.");
+    });
+});
+
 
 module.exports = router;
