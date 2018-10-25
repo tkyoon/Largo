@@ -19,8 +19,13 @@ router.post('/', function(req, res) {
 	var bizNm = '글감 등록 ';
 	log.info(bizNm + '호출 %j', req.body);
 	
+	//로그인여부 체크
+	if(!req.session.userId) {
+		return retObj.returnBadReqRes(res, '로그인이 필요합니다.');
+	}
+	
 	//필수값 체크
-	if (!req.body.title || !req.body.contents || !req.body.quatation || !req.body.regId) {
+	if (!req.body.title || !req.body.contents || !req.body.quatation) {
 		return retObj.returnBadReqRes(res, '필수값을 입력해주세요.');
 	}
 	
@@ -42,7 +47,7 @@ router.post('/', function(req, res) {
 		, contents 			: req.body.contents
 	    , quatation 		: req.body.quatation
 	    , tag	 			: tags
-	    , regId 			: req.body.regId
+	    , regId 			: req.session.userId
 	    , isPublic 			: isPublic
 	}
 	, function(err, post) {
@@ -120,15 +125,24 @@ router.get('/:id', function(req, res) {
 	var bizNm = '글감 상세조회 ';
 	log.info(bizNm + '호출 %j', req.params);
 	
-	postModel.findById(req.params.id, function (err, post) {
-    	if (err) {
-    		log.error(bizNm + '에러!', err);
-			return retObj.returnErrorRes(res, bizNm + '에러!', err);
-    	}
-    	
-    	log.info(bizNm + '성공 %j', post);
-    	return retObj.returnSuccessRes(res, bizNm + '성공', post);
-    });
+	try {
+		
+		postModel.findById(req.params.id, function (err, post) {
+	    	if (err) {
+	    		log.error(bizNm + '에러!', err);
+				return retObj.returnErrorRes(res, bizNm + '에러!', err);
+	    	}
+	    	
+	    	log.info(bizNm + '성공 %j', post);
+	    	return retObj.returnSuccessRes(res, bizNm + '성공', post);
+	    });
+		
+	} catch (e) {
+		log.error(bizNm + '에러!(Unexpected)', e);
+		return retObj.returnErrorRes(res, bizNm + '에러!', e);
+		
+	}
+	
 });
 
 /**
@@ -141,21 +155,49 @@ router.put('/:id', function (req, res) {
 	var bizNm = '글감 수정 ';
 	log.info(bizNm + '호출 %j %j', req.params, req.body);
 	
-	//필수값 체크
-	if (!req.body.regId) {
-		return retObj.returnBadReqRes(res, '필수값을 입력해주세요.');
+	try {
+		
+		//로그인여부 체크
+		if(!req.session.userId) {
+			return retObj.returnBadReqRes(res, '로그인이 필요합니다.');
+		}
+		
+		//수정자 조회
+		postModel.findById(req.params.id, function (err, post) {
+	    	if (err) {
+	    		log.error(bizNm + '에러!', err);
+				return retObj.returnErrorRes(res, bizNm + '에러!', err);
+	    	}
+	    	
+	    	if(post == null){
+				log.info(bizNm + '조회 실패!(글감이 존재하지 않아요)');
+				return retObj.returnBadReqRes(res, bizNm + '글감이 존재하지 않아요!');
+			}
+	    	
+	    	if(req.session.userId != post.regId) {
+	    		return retObj.returnUnauthRes(res, bizNm + '권한이 없습니다!(본인이 작성한 글감만 수정 가능해요.)');
+	    	}
+	    	
+	    	req.body.modDate = new Date();
+	    	//수정
+	    	postModel.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, post) {
+	    		if (err) {
+	        		log.error(bizNm + '에러!', err);
+	    			return retObj.returnErrorRes(res, bizNm + '에러!', err);
+	        	}
+	    		
+	    		log.info(bizNm + '성공 %j', post);
+	        	return retObj.returnSuccessRes(res, bizNm + '성공', post);
+	        });
+	    	
+	    });
+		
+	} catch (e) {
+		log.error(bizNm + '에러!(Unexpected)', e);
+		return retObj.returnErrorRes(res, bizNm + '에러!', e);
 	}
 	
-	req.body.modDate = new Date();
-	postModel.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, post) {
-		if (err) {
-    		log.error(bizNm + '에러!', err);
-			return retObj.returnErrorRes(res, bizNm + '에러!', err);
-    	}
-		
-		log.info(bizNm + '성공 %j', post);
-    	return retObj.returnSuccessRes(res, bizNm + '성공', post);
-    });
+	
 });
 
 /**
@@ -168,10 +210,51 @@ router.delete('/:id', function (req, res) {
 	var bizNm = '글감 삭제 ';
 	log.info(bizNm + '호출 %j', req.params);
 	
-	user.findByIdAndRemove(req.params.id, function (err, user) {
-        if (err) return res.status(500).send("User 삭제 실패");
-        res.status(200).send("User "+ user.name +" 삭제됨.");
-    });
+	try {
+		
+		//로그인여부 체크
+		if(!req.session.userId) {
+			return retObj.returnBadReqRes(res, '로그인이 필요합니다.');
+		}
+		
+		//삭제자 조회
+		postModel.findById(req.params.id, function (err, post) {
+	    	if (err) {
+	    		log.error(bizNm + '에러!', err);
+				return retObj.returnErrorRes(res, bizNm + '에러!', err);
+	    	}
+			
+			if(post == null){
+				log.info(bizNm + '조회 실패!(글감이 존재하지 않아요)');
+				return retObj.returnBadReqRes(res, bizNm + '글감이 존재하지 않아요!');
+			}
+	    	
+	    	if(req.session.userId != post.regId) {
+	    		log.info(bizNm + '실패!(작성자와 삭제자가 일치하지 않아요)');
+	    		return retObj.returnUnauthRes(res, bizNm + '권한이 없습니다!(본인이 작성한 글감만 삭제 가능해요)');
+	    	}
+	    	
+	    	//삭제 실행
+	    	postModel.findByIdAndRemove(req.params.id, function (err, post) {
+	    		if (err) {
+	        		log.error(bizNm + '에러!', err);
+	    			return retObj.returnErrorRes(res, bizNm + '에러!', err);
+	        	}
+	    		
+	    		log.info(bizNm + '성공 %j', post);
+	        	return retObj.returnSuccessRes(res, bizNm + '성공', post);
+	        });
+	    });
+		
+	} catch (e) {
+		log.error(bizNm + '에러!(Unexpected)', e);
+		return retObj.returnErrorRes(res, bizNm + '에러!', e);
+		
+	}
+	
+	
+	
+	
 });
 
 

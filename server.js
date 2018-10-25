@@ -1,8 +1,6 @@
 /**  
  * 프로젝트 시작 js  [TK Yoon 2018. 10. 12. 오전 8:25:19]
  */
-
-
 /** logger tracer 사용  [TK Yoon 2018. 10. 12. 오전 10:16:18] */
 var log 		= require('./util/logger');
 
@@ -10,7 +8,17 @@ var log 		= require('./util/logger');
 var db = require('./db');
 
 var express = require('express');
+var session = require('express-session');
 var app = express();
+
+
+/** Express Session 설정  [TK Yoon 2018. 10. 25. 오전 11:14:30] */
+app.use(session({
+	secret: 'blgykfmleldtut!',
+	resave: false,
+	saveUninitialized: true
+}));
+
 
 /** user controller 연결  [TK Yoon 2018. 10. 12. 오전 8:25:43] */
 var userController = require('./controllers/user-controller');

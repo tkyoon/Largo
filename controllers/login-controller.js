@@ -37,6 +37,10 @@ router.post('/signin', function(req, res) {
     	if(user) {
     		log.info(bizNm + '성공 %j', user);
     		accessModel.insertAccessLog(req.body.userId, true, util.getClientIp(req));
+    		
+    		log.info('세션 생성 %s %s', user.userId, user.userNm);
+    		req.session.userId = user.userId;
+    		req.session.userNm = user.userNm;
     		return retObj.returnSuccessRes(res, bizNm + '성공', user);
     		
     	} else {

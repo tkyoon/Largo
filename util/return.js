@@ -17,7 +17,7 @@ exports.returnSuccessRes = function (res, m, d) {
 
 /**
  * 에러 response
- * Http Status 200
+ * Http Status 500
  */
 exports.returnErrorRes = function (res, m, d) {
 	return res.status(500).send(returnData(-1, m, d));
@@ -41,7 +41,6 @@ exports.returnBadReqRes = function (res, m, d) {
 
 /**
  * response data 생성
- * Http Status 403
  */
 function returnData(cd, m, d) {
 	var ret = new Object();
