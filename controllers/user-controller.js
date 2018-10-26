@@ -3,8 +3,8 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({ extended:true }));
 
-var log 		= require('../util/logger');
-var user = require('../models/user');
+var log  = require('../util/logger');
+var userModel = require('../models/user');
 
 /**
  * 사용자 등록
@@ -14,7 +14,7 @@ var user = require('../models/user');
  */ 
 router.post('/', function(req, res) {
 	log.info('$ 사용자등록 호출 %j', req.body);
-    user.create({
+	userModel.create({
         userId 				: req.body.userId
         , userPw 			: req.body.userPw
         , userNm 			: req.body.userNm
@@ -42,7 +42,7 @@ router.post('/', function(req, res) {
  */
 router.get('/', function(req, res) {
 	log.info('$ 사용자조회 호출 %j', req.params);
-    user.find( {}, function(err, users) {
+	userModel.find( {}, function(err, users) {
     	if (err) {
     		log.error('사용자조회 실패!', err);
     		return res.status(500).send('사용자조회 실패!');
@@ -59,7 +59,7 @@ router.get('/', function(req, res) {
  */
 router.get('/:id', function(req, res) {
 	log.info('$ 사용자 상세조회 호출 %j', req.params);
-    user.findById(req.params.id, function (err, user) {
+	userModel.findById(req.params.id, function (err, user) {
     	if (err) {
     		log.error('사용자 상세조회 실패!', err);
     		return res.status(500).send('사용자상세조회 실패!');
@@ -76,7 +76,7 @@ router.get('/:id', function(req, res) {
  * @returns
  */
 router.put('/:id', function (req, res) {
-	user.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, user) {
+	userModel.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, user) {
         if (err) return res.status(500).send("User 수정 실패.");
         res.status(200).send(user);
     });
@@ -89,12 +89,10 @@ router.put('/:id', function (req, res) {
  * @returns
  */
 router.delete('/:id', function (req, res) {
-	user.findByIdAndRemove(req.params.id, function (err, user) {
+	userModel.findByIdAndRemove(req.params.id, function (err, user) {
         if (err) return res.status(500).send("User 삭제 실패");
         res.status(200).send("User "+ user.name +" 삭제됨.");
     });
 });
-
-
 
 module.exports = router;

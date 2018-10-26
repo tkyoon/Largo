@@ -19,7 +19,7 @@ module.exports = access;
  * @param ip : 사용자 접속 아이피
  * @returns
  */
-module.exports.insertAccessLog = function (id, isSuccess, ip){
+module.exports.insertAccessLog = function (id, isSuccess, ip) {
 	access.create({
 		userId: id
 		, isSuccess : isSuccess

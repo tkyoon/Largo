@@ -7,7 +7,125 @@ var log 		= require('../util/logger');
 var util 		= require('../util/util');
 var retObj 		= require('../util/return');
 
+var transcribeModel 	= require('../models/transcribe');
 var postModel 	= require('../models/post');
+
+/**
+ * 필사 등록
+ * @param req
+ * @param res
+ * @returns
+ */
+router.post('/', function(req, res) {
+	var bizNm = '필사 등록 ';
+	log.info(bizNm + '호출 %j', req.body);
+	
+	try {
+		
+		//로그인여부 체크
+		if(!req.session.userId) {
+			return retObj.returnBadReqRes(res, '로그인이 필요합니다.');
+		}
+		
+		//필수값 체크
+		if (!req.body.postId || !req.body.contents) {
+			return retObj.returnBadReqRes(res, '필수값을 입력해주세요.');
+		}
+		
+		//내가 등록한 필사의 경우 내용만 업데이트 한다.
+		transcribeModel.findOne({ postId : req.body.postId }, function (err, transcribe) {
+	    	if (err) {
+	    		log.error(bizNm + '-조회 에러!', err);
+				return retObj.returnErrorRes(res, bizNm + '-조회 에러!', err);
+	    	}
+	    	
+	    	//글감 조회
+    		postModel.findOne({ postId : req.body.postId }, function (err, post) {
+    			if (err) {
+    	    		log.error(bizNm + '-글감 조회 에러!', err);
+    				return retObj.returnErrorRes(res, bizNm + '-글감 조회 에러!', err);
+    	    	}
+    			
+    			if(null == post) {
+    				return retObj.returnBadReqRes(res, '필사 등록하려는 글감이 존재하지 않아요.');
+    				
+    			} else {
+    				log.info('등록하려는 글감 %j', post);
+    				
+    				//없으면 등록 
+    		    	if(null == transcribe) {
+    		    		log.info('이전에 등록한 글감이 없어요. 새로 등록합니다.');
+    		    				
+	    				transcribeModel.create({
+	    	    			postId 				: post.postId
+	    	    			, title 			: post.title
+	    	    			, contents 			: post.contents
+	    	    		    , regId 			: req.session.userId
+	    	    		}
+	    	    		, function(err, post) {
+	    	    			if (err) {
+	    	    				log.error(bizNm + '에러!', err);
+	    	    				return retObj.returnErrorRes(res, bizNm + '에러!', err);
+	    	    			}
+	    	    			
+	    	    			log.info(bizNm + '성공 %j', post);
+	    	    			return retObj.returnSuccessRes(res, bizNm + '성공', post);
+	    	    			
+	    	    		});
+    		    		
+    		    		
+    	    		//있으면 contents 수정
+    		    	} else {
+    		    		log.info('이전에 등록한 글감이 있어요. 제목과 내용만 수정합니다.');
+    		    		var updateObj = {
+		    				title 		: post.title
+	    	    			, contents 	: post.contents
+    		    		};
+    		    		
+    		    		postModel.UpdateOne({ postId : req.body.postId }, updateObj, {new: true}, function (err, post) {
+    			    		if (err) {
+    			        		log.error(bizNm + '에러!', err);
+    			    			return retObj.returnErrorRes(res, bizNm + '에러!', err);
+    			        	}
+    			    		
+    			    		log.info(bizNm + '성공 %j', post);
+    			        	return retObj.returnSuccessRes(res, bizNm + '성공', post);
+    			        });
+    		    		
+    		    	}
+    				
+    			}
+    			
+    		});
+	    	
+	    });
+		
+	} catch (e) {
+		log.error(bizNm + '에러!(Unexpected)', e);
+		return retObj.returnErrorRes(res, bizNm + '에러!', e);
+	}
+	
+	
+	
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * 글감 등록
@@ -19,54 +137,47 @@ router.post('/', function(req, res) {
 	var bizNm = '글감 등록 ';
 	log.info(bizNm + '호출 %j', req.body);
 	
-	try {
-		
-		//로그인여부 체크
-		if(!req.session.userId) {
-			return retObj.returnBadReqRes(res, '로그인이 필요합니다.');
-		}
-		
-		//필수값 체크
-		if (!req.body.title || !req.body.contents || !req.body.quatation) {
-			return retObj.returnBadReqRes(res, '필수값을 입력해주세요.');
-		}
-		
-		//tag 설정
-		var tagStr = req.body.tags;
-		var tags =  new Array();
-		if(!util.isEmpty(tagStr)){
-			var tags = tagStr.split(",");
-		}
-		
-		//공개여부 설정
-		var isPublic = false;
-		if(req.body.isPublic === true || req.body.isPublic === "true"){
-			isPublic = true;
-		}
-		
-		postModel.create({
-			title 				: req.body.title
-			, contents 			: req.body.contents
-		    , quatation 		: req.body.quatation
-		    , tag	 			: tags
-		    , regId 			: req.session.userId
-		    , isPublic 			: isPublic
-		}
-		, function(err, post) {
-			if (err) {
-				log.error(bizNm + '에러!', err);
-				return retObj.returnErrorRes(res, bizNm + '에러!', err);
-			}
-			
-			log.info(bizNm + '성공 %j', post);
-			return retObj.returnSuccessRes(res, bizNm + '성공', post);
-			
-		});
-		
-	} catch (e) {
-		log.error(bizNm + '에러!(Unexpected)', e);
-		return retObj.returnErrorRes(res, bizNm + '에러!', e);
+	//로그인여부 체크
+	if(!req.session.userId) {
+		return retObj.returnBadReqRes(res, '로그인이 필요합니다.');
 	}
+	
+	//필수값 체크
+	if (!req.body.title || !req.body.contents || !req.body.quatation) {
+		return retObj.returnBadReqRes(res, '필수값을 입력해주세요.');
+	}
+	
+	//tag 설정
+	var tagStr = req.body.tags;
+	var tags =  new Array();
+	if(!util.isEmpty(tagStr)){
+		var tags = tagStr.split(",");
+	}
+	
+	//공개여부 설정
+	var isPublic = false;
+	if(req.body.isPublic === true || req.body.isPublic === "true"){
+		isPublic = true;
+	}
+	
+	postModel.create({
+		title 				: req.body.title
+		, contents 			: req.body.contents
+	    , quatation 		: req.body.quatation
+	    , tag	 			: tags
+	    , regId 			: req.session.userId
+	    , isPublic 			: isPublic
+	}
+	, function(err, post) {
+		if (err) {
+			log.error(bizNm + '에러!', err);
+			return retObj.returnErrorRes(res, bizNm + '에러!', err);
+		}
+		
+		log.info(bizNm + '성공 %j', post);
+		return retObj.returnSuccessRes(res, bizNm + '성공', post);
+		
+	});
 	
 });
 
