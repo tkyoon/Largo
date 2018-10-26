@@ -25,7 +25,7 @@ router.post('/signin', function(req, res) {
 			return retObj.returnBadReqRes(res, '아이디 또는 비밀번호를 입력해주세요.');
 		}
 		
-		userModel.findOne({
+		var qry = userModel.findOne({
 	        userId 				: req.body.userId
 	        , userPw 			: req.body.userPw
 	        , isLeave 			: false

@@ -7,8 +7,8 @@ var log 		= require('../util/logger');
 var util 		= require('../util/util');
 var retObj 		= require('../util/return');
 
-var transcribeModel 	= require('../models/transcribe');
-var postModel 	= require('../models/post');
+var transcribeModel	= require('../models/transcribe');
+var postModel 		= require('../models/post');
 
 /**
  * 필사 등록
@@ -73,7 +73,6 @@ router.post('/', function(req, res) {
 	    	    			
 	    	    		});
     		    		
-    		    		
     	    		//있으면 contents 수정
     		    	} else {
     		    		log.info('이전에 등록한 글감이 있어요. 제목과 내용만 수정합니다.');
@@ -105,12 +104,22 @@ router.post('/', function(req, res) {
 		return retObj.returnErrorRes(res, bizNm + '에러!', e);
 	}
 	
-	
-	
 });
 
 
+/**
+ * 필사 목록
+ */
 
+
+/**
+ * 필사 중간 저장 
+ */
+
+
+/**
+ * 필사 삭제
+ */
 
 
 
