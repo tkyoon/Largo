@@ -55,7 +55,7 @@ router.post('/', function(req, res) {
 		, function(err, post) {
 			if (err) {
 				log.error(bizNm + '에러!', err);
-				return retObj.returnErrorRes(res, bizNm + '에러!', err);
+				return retObj.returnErrorRes(res, bizNm + '에러!', err.message);
 			}
 			
 			log.info(bizNm + '성공 %j', post);
@@ -65,7 +65,7 @@ router.post('/', function(req, res) {
 		
 	} catch (e) {
 		log.error(bizNm + '에러!(Unexpected)', e);
-		return retObj.returnErrorRes(res, bizNm + '에러!', e);
+		return retObj.returnErrorRes(res, bizNm + '에러!', e.message);
 	}
 	
 });
@@ -90,7 +90,6 @@ router.get('/', function(req, res) {
 			page = parseInt(req.query.page); 
 		}
 		
-		var fields = {};
 		var sort = { modDate : -1 }; //modDate desc 정렬
 		var paging = {
 			page : page
@@ -108,7 +107,7 @@ router.get('/', function(req, res) {
 			, function (err, posts) {
 				if (err) {
 					log.error(bizNm + '에러!', err);
-					return retObj.returnErrorRes(res, bizNm + '에러!', err);
+					return retObj.returnErrorRes(res, bizNm + '에러!', err.message);
 				}
 				
 				log.info(bizNm + '성공 %j', posts);
@@ -120,7 +119,7 @@ router.get('/', function(req, res) {
 		
 	} catch (e) {
 		log.error(bizNm + '에러!(Unexpected)', e);
-		return retObj.returnErrorRes(res, bizNm + '에러!', e);
+		return retObj.returnErrorRes(res, bizNm + '에러!', e.message);
 	}
 });
 
@@ -139,7 +138,7 @@ router.get('/:id', function(req, res) {
 		postModel.findById(req.params.id, function (err, post) {
 	    	if (err) {
 	    		log.error(bizNm + '에러!', err);
-				return retObj.returnErrorRes(res, bizNm + '에러!', err);
+				return retObj.returnErrorRes(res, bizNm + '에러!', err.message);
 	    	}
 	    	
 	    	log.info(bizNm + '성공 %j', post);
@@ -148,7 +147,7 @@ router.get('/:id', function(req, res) {
 		
 	} catch (e) {
 		log.error(bizNm + '에러!(Unexpected)', e);
-		return retObj.returnErrorRes(res, bizNm + '에러!', e);
+		return retObj.returnErrorRes(res, bizNm + '에러!', e.message);
 		
 	}
 	
@@ -175,15 +174,16 @@ router.put('/:id', function (req, res) {
 		postModel.findById(req.params.id, function (err, post) {
 	    	if (err) {
 	    		log.error(bizNm + '에러!', err);
-				return retObj.returnErrorRes(res, bizNm + '에러!', err);
+				return retObj.returnErrorRes(res, bizNm + '에러!', err.message);
 	    	}
 	    	
 	    	if(post == null){
-				log.info(bizNm + '조회 실패!(글감이 존재하지 않아요)');
+				log.warn(bizNm + '조회 실패!(글감이 존재하지 않아요)');
 				return retObj.returnBadReqRes(res, bizNm + '글감이 존재하지 않아요!');
 			}
 	    	
 	    	if(req.session.userId != post.regId) {
+	    		log.warn(bizNm + '실패!(작성자와 수정자가 일치하지 않아요)');
 	    		return retObj.returnUnauthRes(res, bizNm + '권한이 없습니다!(본인이 작성한 글감만 수정 가능해요.)');
 	    	}
 	    	
@@ -192,7 +192,7 @@ router.put('/:id', function (req, res) {
 	    	postModel.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, post) {
 	    		if (err) {
 	        		log.error(bizNm + '에러!', err);
-	    			return retObj.returnErrorRes(res, bizNm + '에러!', err);
+	    			return retObj.returnErrorRes(res, bizNm + '에러!', err.message);
 	        	}
 	    		
 	    		log.info(bizNm + '성공 %j', post);
@@ -203,7 +203,7 @@ router.put('/:id', function (req, res) {
 		
 	} catch (e) {
 		log.error(bizNm + '에러!(Unexpected)', e);
-		return retObj.returnErrorRes(res, bizNm + '에러!', e);
+		return retObj.returnErrorRes(res, bizNm + '에러!', e.message);
 	}
 	
 });
@@ -229,16 +229,16 @@ router.delete('/:id', function (req, res) {
 		postModel.findById(req.params.id, function (err, post) {
 	    	if (err) {
 	    		log.error(bizNm + '에러!', err);
-				return retObj.returnErrorRes(res, bizNm + '에러!', err);
+				return retObj.returnErrorRes(res, bizNm + '에러!', err.message);
 	    	}
 			
 			if(post == null){
-				log.info(bizNm + '조회 실패!(글감이 존재하지 않아요)');
+				log.warn(bizNm + '조회 실패!(글감이 존재하지 않아요)');
 				return retObj.returnBadReqRes(res, bizNm + '글감이 존재하지 않아요!');
 			}
 	    	
 	    	if(req.session.userId != post.regId) {
-	    		log.info(bizNm + '실패!(작성자와 삭제자가 일치하지 않아요)');
+	    		log.warn(bizNm + '실패!(작성한 사람만 삭제할 수 있어요)');
 	    		return retObj.returnUnauthRes(res, bizNm + '권한이 없습니다!(본인이 작성한 글감만 삭제 가능해요)');
 	    	}
 	    	
@@ -246,7 +246,7 @@ router.delete('/:id', function (req, res) {
 	    	postModel.findByIdAndRemove(req.params.id, function (err, post) {
 	    		if (err) {
 	        		log.error(bizNm + '에러!', err);
-	    			return retObj.returnErrorRes(res, bizNm + '에러!', err);
+	    			return retObj.returnErrorRes(res, bizNm + '에러!', err.message);
 	        	}
 	    		
 	    		log.info(bizNm + '성공 %j', post);
@@ -256,11 +256,10 @@ router.delete('/:id', function (req, res) {
 		
 	} catch (e) {
 		log.error(bizNm + '에러!(Unexpected)', e);
-		return retObj.returnErrorRes(res, bizNm + '에러!', e);
+		return retObj.returnErrorRes(res, bizNm + '에러!', e.message);
 		
 	}
 	
 });
-
 
 module.exports = router;

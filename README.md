@@ -16,7 +16,7 @@
 * tb_transcribe create index
  
 ```
-	pilsa.tb_transcribe.createIndex( { postId: 1 }, { unique: true } )
+	pilsa.tb_transcribe.createIndex( { postId : 1, regId : 1 }, { unique: true } )
 ```
 
 

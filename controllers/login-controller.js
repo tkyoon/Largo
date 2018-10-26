@@ -25,7 +25,7 @@ router.post('/signin', function(req, res) {
 			return retObj.returnBadReqRes(res, '아이디 또는 비밀번호를 입력해주세요.');
 		}
 		
-		var qry = userModel.findOne({
+		userModel.findOne({
 	        userId 				: req.body.userId
 	        , userPw 			: req.body.userPw
 	        , isLeave 			: false
@@ -33,7 +33,7 @@ router.post('/signin', function(req, res) {
 	    , function(err, user) {
 	    	if (err) {
 	    		log.error(bizNm + '에러!', err);
-	    		return retObj.returnErrorRes(res, bizNm + '에러!', err);
+	    		return retObj.returnErrorRes(res, bizNm + '에러!', err.message);
 	    	}
 	    	
 	    	if(user) {
@@ -56,13 +56,41 @@ router.post('/signin', function(req, res) {
 		
 	} catch (e) {
 		log.error(bizNm + '에러!(Unexpected)', e);
-		return retObj.returnErrorRes(res, bizNm + '에러!', e);
+		return retObj.returnErrorRes(res, bizNm + '에러!', e.message);
 		
 	}
 	
+});
+
+/**
+ * 로그아웃
+ * @param req
+ * @param res
+ * @returns
+ */
+router.post('/signout', function(req, res) {
+	var bizNm = '로그아웃 ';
+	log.info(bizNm + '호출 %j', req.session);
+	
+	try {
+		
+		var r = req.session.destroy();
+		return retObj.returnSuccessRes(res, bizNm + '성공');
+		
+	} catch (e) {
+		log.error(bizNm + '에러!(Unexpected)', e);
+		return retObj.returnErrorRes(res, bizNm + '에러!', e.message);
+		
+	}
 	
 });
 
+/**
+ * 사용자 가입
+ * @param req
+ * @param res
+ * @returns
+ */
 router.post('/signup', function(req, res) {
 	var bizNm = '사용자가입 ';
 	log.info(bizNm + '호출 %j', req.body);
@@ -104,7 +132,7 @@ router.post('/signup', function(req, res) {
 	    	, function(err, user) {
 	    		if (err) {
 	    			log.error(bizNm + '에러!', err);
-	    			return retObj.returnErrorRes(res, bizNm + '에러!', err);
+	    			return retObj.returnErrorRes(res, bizNm + '에러!', err.message);
 	    		}
 	    		
 	    		if(user) {
@@ -121,7 +149,7 @@ router.post('/signup', function(req, res) {
 		
 	} catch (e) {
 		log.error(bizNm + '에러!(Unexpected)', e);
-		return retObj.returnErrorRes(res, bizNm + '에러!', e);
+		return retObj.returnErrorRes(res, bizNm + '에러!', e.message);
 	}
 	
 	

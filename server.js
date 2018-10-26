@@ -19,27 +19,33 @@ app.use(session({
 	saveUninitialized: true
 }));
 
-
 /** user controller 연결  [TK Yoon 2018. 10. 12. 오전 8:25:43] */
-var userController = require('./controllers/user-controller');
-app.use('/users', userController);
+//var userController = require('./controllers/user-controller');
+//app.use('/users', userController);
 
-/** 로그인 controller 연결  [TK Yoon 2018. 10. 14. 오후 10:28:43] */
+/** 로그인 login controller 연결  [TK Yoon 2018. 10. 14. 오후 10:28:43] */
 var loginController = require('./controllers/login-controller');
 app.use('/', loginController);
 
-/** post controller 연결  [TK Yoon 2018. 10. 18. 오전 4:31:46] */
+/** 글감 post controller 연결  [TK Yoon 2018. 10. 18. 오전 4:31:46] */
 var postController = require('./controllers/post-controller');
 app.use('/posts', postController);
 
-var ip 		= require("ip");
+/** 필사 transcribe controller 연결  [TK Yoon 2018. 10. 27. 오전 1:48:18] */
+var transcribeController = require('./controllers/transcribe-controller');
+app.use('/transcribes', transcribeController);
+
+//var ip 		= require("ip");
+const publicIp = require('public-ip');
 var port 	= process.env.PORT || 8600;
 var server = app.listen(port, function() {
-	log.info('§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§');
-    log.info('Largo Project Sever Started');
-    log.info('Sever IP	: %s', ip.address());
-    log.info('Sever Port	: %s', port);
-    log.info('§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§');
+	publicIp.v4().then(ip => {
+    	log.info('§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§');
+    	log.info('Largo[Transcribe] Project Sever Started');
+    	log.info('Sever IP	: %s', ip);
+    	log.info('Sever Port	: %s', port);
+    	log.info('§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§');
+    });
 });
 
 //log.info('Sever IP	: %o', server.address());
