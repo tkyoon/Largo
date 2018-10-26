@@ -1,0 +1,697 @@
+{
+  "front-version": "2.19.1",
+  "version": 3,
+  "nodes": [
+    {
+      "type": "Project",
+      "id": "cb286194-1917-499a-b964-af28dc58a260",
+      "lastModified": "2018-10-27T03:03:19.676+09:00",
+      "name": "필사의일격"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": [
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "userId",
+              "value": "tkyoon2"
+            },
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "userPw",
+              "value": "12334"
+            }
+          ]
+        },
+        "bodyType": "Form",
+        "autoSetLength": true,
+        "textBody": "{\n\t\"header\": {\n\t\t\"request_code\" : \"5004Q\"\n\t\t, \"api_name\" : \"sign web api\"\n\t\t, \"session_id\" : \"S1002\"\n\t}\n\t, \"body\" : {\n\t\t\"client_id\" : \"*7BC1F949E25EE7B3A59275F8AA126E248DA5BB01\"\n\t\t, \"biz_id\" : \"0\"\n\t\t, \"sign_user_email\" : \"y-friend@daum.net\"\n\t\t, \"workflow_id\" : \"1233\"\n\t}\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8600",
+        "path": "/signin"
+      },
+      "id": "4ee0e5be-c1e7-4285-8912-c19105f319d9",
+      "lastModified": "2018-10-27T02:59:44.041+09:00",
+      "name": "signin",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "earc 114CGDS5zOHbq4c9p+ChnRF9b33UJAZa"
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/x-www-form-urlencoded"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": null,
+        "ownerId": "auth0|5bc63c33994173204f37b3b5"
+      },
+      "parentId": "cb286194-1917-499a-b964-af28dc58a260"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": [
+            {
+              "type": "Text",
+              "name": "userId",
+              "value": "tkyoon1"
+            },
+            {
+              "type": "Text",
+              "name": "userPw",
+              "value": "12334"
+            }
+          ]
+        },
+        "bodyType": "Form",
+        "autoSetLength": true,
+        "textBody": "{\n\t\"header\": {\n\t\t\"request_code\" : \"5004Q\"\n\t\t, \"api_name\" : \"sign web api\"\n\t\t, \"session_id\" : \"S1002\"\n\t}\n\t, \"body\" : {\n\t\t\"client_id\" : \"*7BC1F949E25EE7B3A59275F8AA126E248DA5BB01\"\n\t\t, \"biz_id\" : \"0\"\n\t\t, \"sign_user_email\" : \"y-friend@daum.net\"\n\t\t, \"workflow_id\" : \"1233\"\n\t}\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8600",
+        "path": "/signout"
+      },
+      "id": "215d35cc-e1d0-4673-8f3d-5d38986e7f58",
+      "lastModified": "2018-10-27T01:10:24.019+09:00",
+      "name": "signout",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "earc 114CGDS5zOHbq4c9p+ChnRF9b33UJAZa"
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/x-www-form-urlencoded"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": null,
+        "ownerId": "auth0|5bc63c33994173204f37b3b5"
+      },
+      "parentId": "cb286194-1917-499a-b964-af28dc58a260"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": [
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "userId",
+              "value": "tkyoon2"
+            },
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "userPw",
+              "value": "12334"
+            },
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "userNm",
+              "value": "윤태경2"
+            }
+          ]
+        },
+        "bodyType": "Form",
+        "autoSetLength": true,
+        "textBody": "{\n\t\"header\": {\n\t\t\"request_code\" : \"5004Q\"\n\t\t, \"api_name\" : \"sign web api\"\n\t\t, \"session_id\" : \"S1002\"\n\t}\n\t, \"body\" : {\n\t\t\"client_id\" : \"*7BC1F949E25EE7B3A59275F8AA126E248DA5BB01\"\n\t\t, \"biz_id\" : \"0\"\n\t\t, \"sign_user_email\" : \"y-friend@daum.net\"\n\t\t, \"workflow_id\" : \"1233\"\n\t}\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8600",
+        "path": "/signup"
+      },
+      "id": "a94305c2-5b6b-4adb-b4c9-df2b7afa8847",
+      "lastModified": "2018-10-27T02:59:54.432+09:00",
+      "name": "signup",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "earc 114CGDS5zOHbq4c9p+ChnRF9b33UJAZa"
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/x-www-form-urlencoded"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": null,
+        "ownerId": "auth0|5bc63c33994173204f37b3b5"
+      },
+      "parentId": "cb286194-1917-499a-b964-af28dc58a260"
+    },
+    {
+      "uriEditor": true,
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": [
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "title",
+              "value": "55tyxxx123"
+            },
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "contents",
+              "value": "윤태경"
+            },
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "quatation",
+              "value": "출처"
+            },
+            {
+              "type": "Text",
+              "name": "regId",
+              "value": "tkyoon111"
+            },
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "tags",
+              "value": "a,b,c,윤태경"
+            },
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "isPublic",
+              "value": "true"
+            }
+          ]
+        },
+        "bodyType": "Form",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8600",
+        "path": "/posts"
+      },
+      "id": "5ecc6fa6-f853-41e7-a34b-12dd39d30e5d",
+      "lastModified": "2018-10-27T02:06:15.370+09:00",
+      "name": "글감 등록",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/x-www-form-urlencoded"
+        }
+      ],
+      "metaInfo": {
+        "ownerId": "auth0|5bc63c33994173204f37b3b5"
+      },
+      "parentId": "cb286194-1917-499a-b964-af28dc58a260"
+    },
+    {
+      "uriEditor": true,
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": [
+            {
+              "name": "page",
+              "value": "1"
+            },
+            {
+              "name": "rows",
+              "value": "2"
+            }
+          ]
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8600",
+        "path": "/posts"
+      },
+      "id": "a4a97340-7932-41ae-ac44-f93e882a1c36",
+      "lastModified": "2018-10-26T13:54:58.444+09:00",
+      "name": "글감 목록조회",
+      "headers": [],
+      "metaInfo": {
+        "IS_FROM_HISTORY": null,
+        "ownerId": "auth0|5bc63c33994173204f37b3b5"
+      },
+      "parentId": "cb286194-1917-499a-b964-af28dc58a260"
+    },
+    {
+      "uriEditor": true,
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.5",
+        "name": "DELETE"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": [
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "regId",
+              "value": "abc"
+            }
+          ]
+        },
+        "bodyType": "Form",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8600",
+        "path": "/posts/5bce5cde31a3df24c092a698"
+      },
+      "id": "24a45776-7c9b-452b-840c-da42f5233a81",
+      "lastModified": "2018-10-26T13:54:58.444+09:00",
+      "name": "글감 삭제",
+      "headers": [],
+      "metaInfo": {
+        "IS_FROM_HISTORY": null,
+        "ownerId": "auth0|5bc63c33994173204f37b3b5"
+      },
+      "parentId": "cb286194-1917-499a-b964-af28dc58a260"
+    },
+    {
+      "uriEditor": true,
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8600",
+        "path": "/posts/5bd3452eb3709d43082a965a"
+      },
+      "id": "61cf17c7-150f-4d28-93d8-44fe5f76830b",
+      "lastModified": "2018-10-27T02:27:12.448+09:00",
+      "name": "글감 상세조회",
+      "headers": [],
+      "metaInfo": {
+        "IS_FROM_HISTORY": null,
+        "ownerId": "auth0|5bc63c33994173204f37b3b5"
+      },
+      "parentId": "cb286194-1917-499a-b964-af28dc58a260"
+    },
+    {
+      "uriEditor": true,
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+        "name": "PUT"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": [
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "title",
+              "value": "a11"
+            },
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "contents",
+              "value": "b11"
+            }
+          ]
+        },
+        "bodyType": "Form",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8600",
+        "path": "/posts/5bd3452eb3709d43082a965a"
+      },
+      "id": "e49843a3-0817-4981-815f-bf273fd75b18",
+      "lastModified": "2018-10-27T02:53:51.487+09:00",
+      "name": "글감 수정",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/x-www-form-urlencoded"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": null,
+        "ownerId": "auth0|5bc63c33994173204f37b3b5"
+      },
+      "parentId": "cb286194-1917-499a-b964-af28dc58a260"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": [
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "postId",
+              "value": "5bd3452eb3709d43082a965a"
+            }
+          ]
+        },
+        "bodyType": "Form",
+        "autoSetLength": true,
+        "textBody": "{\n\t\"header\": {\n\t\t\"request_code\" : \"5004Q\"\n\t\t, \"api_name\" : \"sign web api\"\n\t\t, \"session_id\" : \"S1002\"\n\t}\n\t, \"body\" : {\n\t\t\"client_id\" : \"*7BC1F949E25EE7B3A59275F8AA126E248DA5BB01\"\n\t\t, \"biz_id\" : \"0\"\n\t\t, \"sign_user_email\" : \"y-friend@daum.net\"\n\t\t, \"workflow_id\" : \"1233\"\n\t}\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8600",
+        "path": "/transcribes"
+      },
+      "id": "601c1e2f-72a4-4456-b761-7704d9688bdf",
+      "lastModified": "2018-10-27T02:07:41.144+09:00",
+      "name": "필사 등록",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "earc 114CGDS5zOHbq4c9p+ChnRF9b33UJAZa"
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/x-www-form-urlencoded"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": null,
+        "ownerId": "auth0|5bc63c33994173204f37b3b5"
+      },
+      "parentId": "cb286194-1917-499a-b964-af28dc58a260"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": [
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "postId",
+              "value": "5bd3452eb3709d43082a965a"
+            }
+          ]
+        },
+        "bodyType": "Form",
+        "autoSetLength": true,
+        "textBody": "{\n\t\"header\": {\n\t\t\"request_code\" : \"5004Q\"\n\t\t, \"api_name\" : \"sign web api\"\n\t\t, \"session_id\" : \"S1002\"\n\t}\n\t, \"body\" : {\n\t\t\"client_id\" : \"*7BC1F949E25EE7B3A59275F8AA126E248DA5BB01\"\n\t\t, \"biz_id\" : \"0\"\n\t\t, \"sign_user_email\" : \"y-friend@daum.net\"\n\t\t, \"workflow_id\" : \"1233\"\n\t}\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8600",
+        "path": "/transcribes"
+      },
+      "id": "eb357022-fea3-4487-81ac-6a50e0c1de3b",
+      "lastModified": "2018-10-27T02:08:24.497+09:00",
+      "name": "필사 목록조회",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "earc 114CGDS5zOHbq4c9p+ChnRF9b33UJAZa"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": null,
+        "ownerId": "auth0|5bc63c33994173204f37b3b5"
+      },
+      "parentId": "cb286194-1917-499a-b964-af28dc58a260"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.5",
+        "name": "DELETE"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": [
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "line",
+              "value": "3"
+            }
+          ]
+        },
+        "bodyType": "Form",
+        "autoSetLength": true,
+        "textBody": "{\n\t\"header\": {\n\t\t\"request_code\" : \"5004Q\"\n\t\t, \"api_name\" : \"sign web api\"\n\t\t, \"session_id\" : \"S1002\"\n\t}\n\t, \"body\" : {\n\t\t\"client_id\" : \"*7BC1F949E25EE7B3A59275F8AA126E248DA5BB01\"\n\t\t, \"biz_id\" : \"0\"\n\t\t, \"sign_user_email\" : \"y-friend@daum.net\"\n\t\t, \"workflow_id\" : \"1233\"\n\t}\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8600",
+        "path": "/transcribes/5bd35648d2b4a344b02be1b1"
+      },
+      "id": "6d68ac73-9e7b-414c-8584-a027d4ab3400",
+      "lastModified": "2018-10-27T03:03:19.676+09:00",
+      "name": "필사 삭제",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "earc 114CGDS5zOHbq4c9p+ChnRF9b33UJAZa"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": null,
+        "ownerId": "auth0|5bc63c33994173204f37b3b5"
+      },
+      "parentId": "cb286194-1917-499a-b964-af28dc58a260"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+        "name": "PUT"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": [
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "line",
+              "value": "111"
+            }
+          ]
+        },
+        "bodyType": "Form",
+        "autoSetLength": true,
+        "textBody": "{\n\t\"header\": {\n\t\t\"request_code\" : \"5004Q\"\n\t\t, \"api_name\" : \"sign web api\"\n\t\t, \"session_id\" : \"S1002\"\n\t}\n\t, \"body\" : {\n\t\t\"client_id\" : \"*7BC1F949E25EE7B3A59275F8AA126E248DA5BB01\"\n\t\t, \"biz_id\" : \"0\"\n\t\t, \"sign_user_email\" : \"y-friend@daum.net\"\n\t\t, \"workflow_id\" : \"1233\"\n\t}\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8600",
+        "path": "/transcribes/5bd35648d2b4a344b02be1b1"
+      },
+      "id": "3c47de1a-fa96-4de6-ad2a-46f8352d4d82",
+      "lastModified": "2018-10-27T03:01:05.838+09:00",
+      "name": "필사 저장",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "earc 114CGDS5zOHbq4c9p+ChnRF9b33UJAZa"
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/x-www-form-urlencoded"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": null,
+        "ownerId": "auth0|5bc63c33994173204f37b3b5"
+      },
+      "parentId": "cb286194-1917-499a-b964-af28dc58a260"
+    }
+  ]
+}
