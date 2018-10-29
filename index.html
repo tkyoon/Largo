@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>test</title>
+
+<script src = "/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+	var socket = io();
+	
+	//최초 접속 시
+	socket.on('message', function(data) {
+		console.log(data);
+	});
+	
+	//broadcast
+	socket.on('broadcast', function(data) {
+		console.log(data);
+	});
+	
+	//user가 접속할때마다  => 화면에 icon 표시
+	socket.on('newclientconnect', function(data) {
+		console.log(data);
+	});
+	
+	//소켓 접속이 끊어졌을 경우
+	socket.on('disconnect', function () {
+	   console.log('disconnect client event....');
+	});
+
+</script>
+</head>
+<body>
+tk socket io test
+</body>
+</html>
+
