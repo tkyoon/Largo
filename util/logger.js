@@ -4,7 +4,10 @@
 var fs 		= require('fs');
 var moment 	= require('moment');
 
-
+//log 폴더 없다면 생성
+if(!fs.exists('./log')) {
+	fs.mkdir('./log');
+}
 var log = require('tracer').colorConsole({
 	transport: [
 		function (data) {

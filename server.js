@@ -39,7 +39,7 @@ app.use('/transcribes', transcribeController);
 
 //var ip 		= require("ip");
 const publicIp = require('public-ip');
-var port 	= process.env.PORT || 80;
+var port 	= process.env.PORT || 8600;
 
 const server = app.listen(port, function() {
 	publicIp.v4().then(ip => {
