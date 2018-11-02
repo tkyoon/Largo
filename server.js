@@ -13,6 +13,8 @@ const app = express();
 
 const socketio = require('socket.io'); // 추가
 
+/** client html source 연결  [TK Yoon 2018. 11. 3. 오전 7:34:20] */
+app.use(express.static(__dirname + '/views'));
 
 /** Express Session 설정  [TK Yoon 2018. 10. 25. 오전 11:14:30] */
 app.use(session({
