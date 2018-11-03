@@ -40,6 +40,7 @@
 		
 		nav {
 			width : 1200px;
+			background-color: #000000;
 		}
 		
 		#main {
@@ -49,6 +50,7 @@
 		section {
 			background-color: #fff;
 			height : calc(100vh - 114px);
+		    overflow: auto;
 		}
 		
 		footer {
@@ -61,8 +63,12 @@
 		    background-color: #999c9c;
 		}
 		
-		.container {
-			
+		h1.logo-wrapper {
+		    margin: 15px 0 0 15px;
+		}
+		
+		h1 span.logo-text {
+			display: inline;
 		}
 	</style>
 </head>
@@ -85,7 +91,11 @@
             <nav class="navbar-color">
                 <div class="nav-wrapper">
                     <ul class="left">                      
-                      <li><h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1"><img src="images/materialize-logo.png" alt="materialize logo"></a> <span class="logo-text">Materialize</span></h1></li>
+                      <li>
+                      	<h1 class="logo-wrapper">
+                      		<!-- <a href="index.html" class="brand-logo darken-1"><img src="images/materialize-logo.png" alt="materialize logo"></a> --><span class="logo-text">필사의 일격</span>
+						</h1>
+                      </li>
                     </ul>
                     
                     <!-- <div class="header-search-wrapper hide-on-med-and-down">
@@ -106,7 +116,7 @@
                         </li>
                     </ul> -->
                     <!-- translation-button -->
-                    <ul id="translation-dropdown" class="dropdown-content">
+                    <!-- <ul id="translation-dropdown" class="dropdown-content">
                       <li>
                         <a href="#!"><img src="images/flag-icons/United-States.png" alt="English" />  <span class="language-select">English</span></a>
                       </li>
@@ -120,9 +130,9 @@
                         <a href="#!"><img src="images/flag-icons/Germany.png" alt="German" />  <span class="language-select">German</span></a>
                       </li>
                       
-                    </ul>
+                    </ul> -->
                     <!-- notifications-dropdown -->
-                    <ul id="notifications-dropdown" class="dropdown-content">
+                    <!-- <ul id="notifications-dropdown" class="dropdown-content">
                       <li>
                         <h5>NOTIFICATIONS <span class="new badge">5</span></h5>
                       </li>
@@ -147,7 +157,7 @@
                         <a href="#!"><i class="mdi-action-trending-up"></i> Generate monthly report</a>
                         <time class="media-meta" datetime="2015-06-12T20:50:48+08:00">1 week ago</time>
                       </li>
-                    </ul>
+                    </ul> -->
                 </div>
             </nav>
         </div>
@@ -200,6 +210,73 @@
             <p class="caption">A Simple Blank Page to use it for your custome design and elements.</p>
             <div class="divider"></div>
             
+            <div id="basic-form" class="section">
+              <div class="row">
+                <div class="col s12 m12 l6">
+                  <div class="card-panel">
+                    <h4 class="header2">글감등록</h4>
+                    <div class="row">
+                      <form class="col s12">
+                        <div class="row">
+                          <div class="input-field col s12">
+                            <input id="name" type="text">
+                            <label for="first_name" class="">Name</label>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="input-field col s12">
+                            <input id="email" type="email">
+                            <label for="email">Email</label>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="input-field col s12">
+                            <input id="password" type="password">
+                            <label for="password">Password</label>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="input-field col s12">
+                            <textarea id="message" class="materialize-textarea"></textarea>
+                            <label for="message">Message</label>
+                          </div>
+                          <div class="row">
+                            <div class="input-field col s12">
+                              <button class="btn cyan waves-effect waves-light right" type="submit" name="action">Submit
+                                <i class="mdi-content-send right"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Form with placeholder -->
+                <div class="col s12 m12 l6">
+                  <div class="card-panel">
+                    <h4 class="header2">미리보기</h4>
+                    <div class="row">
+                      <form class="col s12">
+                        <div class="row">
+                        <pre>
+가나다라마바사.
+가나다라마바사.
+가나다라마바사.
+						</pre>
+                          <!-- <div class="input-field col s12">
+                            <input placeholder="John Doe" id="name2" type="text">
+                            <label for="first_name" class="active">Name</label>
+                          </div> -->
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
           </div>
           <!-- Floating Action Button -->
             <!-- <div class="fixed-action-btn" style="bottom: 50px; right: 19px;">
@@ -221,141 +298,6 @@
 
       <!-- //////////////////////////////////////////////////////////////////////////// -->
       <!-- START RIGHT SIDEBAR NAV-->
-      <aside id="right-sidebar-nav">
-        <ul id="chat-out" class="side-nav rightside-navigation">
-            <li class="li-hover">
-            <a href="#" data-activates="chat-out" class="chat-close-collapse right"><i class="mdi-navigation-close"></i></a>
-            <div id="right-search" class="row">
-                <form class="col s12">
-                    <div class="input-field">
-                        <i class="mdi-action-search prefix"></i>
-                        <input id="icon_prefix" type="text" class="validate">
-                        <label for="icon_prefix">Search</label>
-                    </div>
-                </form>
-            </div>
-            </li>
-            <li class="li-hover">
-                <ul class="chat-collapsible" data-collapsible="expandable">
-                <li>
-                    <div class="collapsible-header teal white-text active"><i class="mdi-social-whatshot"></i>Recent Activity</div>
-                    <div class="collapsible-body recent-activity">
-                        <div class="recent-activity-list chat-out-list row">
-                            <div class="col s3 recent-activity-list-icon"><i class="mdi-action-add-shopping-cart"></i>
-                            </div>
-                            <div class="col s9 recent-activity-list-text">
-                                <a href="#">just now</a>
-                                <p>Jim Doe Purchased new equipments for zonal office.</p>
-                            </div>
-                        </div>
-                        <div class="recent-activity-list chat-out-list row">
-                            <div class="col s3 recent-activity-list-icon"><i class="mdi-device-airplanemode-on"></i>
-                            </div>
-                            <div class="col s9 recent-activity-list-text">
-                                <a href="#">Yesterday</a>
-                                <p>Your Next flight for USA will be on 15th August 2015.</p>
-                            </div>
-                        </div>
-                        <div class="recent-activity-list chat-out-list row">
-                            <div class="col s3 recent-activity-list-icon"><i class="mdi-action-settings-voice"></i>
-                            </div>
-                            <div class="col s9 recent-activity-list-text">
-                                <a href="#">5 Days Ago</a>
-                                <p>Natalya Parker Send you a voice mail for next conference.</p>
-                            </div>
-                        </div>
-                        <div class="recent-activity-list chat-out-list row">
-                            <div class="col s3 recent-activity-list-icon"><i class="mdi-action-store"></i>
-                            </div>
-                            <div class="col s9 recent-activity-list-text">
-                                <a href="#">Last Week</a>
-                                <p>Jessy Jay open a new store at S.G Road.</p>
-                            </div>
-                        </div>
-                        <div class="recent-activity-list chat-out-list row">
-                            <div class="col s3 recent-activity-list-icon"><i class="mdi-action-settings-voice"></i>
-                            </div>
-                            <div class="col s9 recent-activity-list-text">
-                                <a href="#">5 Days Ago</a>
-                                <p>Natalya Parker Send you a voice mail for next conference.</p>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="collapsible-header light-blue white-text active"><i class="mdi-editor-attach-money"></i>Sales Repoart</div>
-                    <div class="collapsible-body sales-repoart">
-                        <div class="sales-repoart-list  chat-out-list row">
-                            <div class="col s8">Target Salse</div>
-                            <div class="col s4"><span id="sales-line-1"></span>
-                            </div>
-                        </div>
-                        <div class="sales-repoart-list chat-out-list row">
-                            <div class="col s8">Payment Due</div>
-                            <div class="col s4"><span id="sales-bar-1"></span>
-                            </div>
-                        </div>
-                        <div class="sales-repoart-list chat-out-list row">
-                            <div class="col s8">Total Delivery</div>
-                            <div class="col s4"><span id="sales-line-2"></span>
-                            </div>
-                        </div>
-                        <div class="sales-repoart-list chat-out-list row">
-                            <div class="col s8">Total Progress</div>
-                            <div class="col s4"><span id="sales-bar-2"></span>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="collapsible-header red white-text"><i class="mdi-action-stars"></i>Favorite Associates</div>
-                    <div class="collapsible-body favorite-associates">
-                        <div class="favorite-associate-list chat-out-list row">
-                            <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
-                            </div>
-                            <div class="col s8">
-                                <p>Eileen Sideways</p>
-                                <p class="place">Los Angeles, CA</p>
-                            </div>
-                        </div>
-                        <div class="favorite-associate-list chat-out-list row">
-                            <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
-                            </div>
-                            <div class="col s8">
-                                <p>Zaham Sindil</p>
-                                <p class="place">San Francisco, CA</p>
-                            </div>
-                        </div>
-                        <div class="favorite-associate-list chat-out-list row">
-                            <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img offline-user valign profile-image">
-                            </div>
-                            <div class="col s8">
-                                <p>Renov Leongal</p>
-                                <p class="place">Cebu City, Philippines</p>
-                            </div>
-                        </div>
-                        <div class="favorite-associate-list chat-out-list row">
-                            <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
-                            </div>
-                            <div class="col s8">
-                                <p>Weno Carasbong</p>
-                                <p>Tokyo, Japan</p>
-                            </div>
-                        </div>
-                        <div class="favorite-associate-list chat-out-list row">
-                            <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img offline-user valign profile-image">
-                            </div>
-                            <div class="col s8">
-                                <p>Nusja Nawancali</p>
-                                <p class="place">Bangkok, Thailand</p>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                </ul>
-            </li>
-        </ul>
-      </aside>
       <!-- LEFT RIGHT SIDEBAR NAV-->
 
     </div>
@@ -372,8 +314,8 @@
   <footer class="page-footer">
     <div class="footer-copyright">
       <div class="container">
-        <span>Copyright © 2015 <a class="grey-text text-lighten-4" href="http://themeforest.net/user/geekslabs/portfolio?ref=geekslabs" target="_blank">GeeksLabs</a> All rights reserved.</span>
-        <span class="right"> Design and Developed by <a class="grey-text text-lighten-4" href="http://geekslabs.com/">GeeksLabs</a></span>
+        <span>Copyright © 2019 <a class="grey-text text-lighten-4" href="http://themeforest.net/user/geekslabs/portfolio?ref=geekslabs" target="_blank">TK Yoon</a> All rights reserved.</span>
+        <!-- <span class="right"> Design and Developed by <a class="grey-text text-lighten-4" href="http://geekslabs.com/">GeeksLabs</a></span> -->
         </div>
     </div>
   </footer>
