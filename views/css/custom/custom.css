@@ -9,3 +9,43 @@ NOTE:
 ------
 PLACE HERE YOUR OWN CSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
 WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+/*----------------------------------------
+    Blog
+------------------------------------------*/
+.blog-sizer {
+    /* width: 33.33%; */
+    width : 270px;
+  }
+.blog {
+    /* width: 33.33%; */
+    width : 270px;
+}
+
+.card-action-buttons {
+	position: absolute;
+    float: right;
+    bottom: 28px;
+    right: 0px;
+}
+
+.blog .card .card-content .card-title, .blog .card .card-reveal .card-title {
+    font-size: 1.0rem;
+}
+
+.plisa-left-section {
+	min-width: 280px;
+}
+	
+.text-ellipsis {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis
+}
+
+.modal .modal-content {
+ 	padding: 10px;
+}
+
+textarea.materialize-textarea {
+    min-height: 14rem;
+}
