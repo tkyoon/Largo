@@ -517,7 +517,7 @@
                         <label for="ipt_title">제목</label>
 					</div>
                     <div class="input-field col s12">
-                    	<textarea id="txtarea_contents" class="materialize-textarea validate" placeholder="마침표 기준으로 입력단위가 저장됩니다."></textarea>
+                    	<textarea id="txtarea_contents" class="materialize-textarea validate" placeholder="마침표 기준으로 입력단위가 저장됩니다." @keyup.enter="enter" @keydown.ctrl.86="copyFn" @paste="onPaste" v-model="contents"></textarea>
                         <label for="txtarea_contents">내용</label>
 					</div>
                     <div class="input-field col s12">
@@ -530,7 +530,11 @@
                 	<div class="row">
                 		내용 미리보기
                 	</div>
+                	
+                	<div class="row s12" style="border:1px dashed #9e9e9e;padding: 10px;" v-html="preContents">
+                	</div>
                 	<div class="row s12" style="border:1px dashed #9e9e9e;padding: 10px;">
+	                	<!-- {{ regMessage }} -->
                 	</div>
                 	
                 	
@@ -556,8 +560,8 @@
   <footer class="page-footer">
     <div class="footer-copyright">
       <div class="container">
-        <span>Copyright © 2015 <a class="grey-text text-lighten-4" href="http://themeforest.net/user/geekslabs/portfolio?ref=geekslabs" target="_blank">GeeksLabs</a> All rights reserved.</span>
-        <span class="right"> Design and Developed by <a class="grey-text text-lighten-4" href="http://geekslabs.com/">GeeksLabs</a></span>
+        <span>Copyright © 2019 <a class="grey-text text-lighten-4" href="http://themeforest.net/user/geekslabs/portfolio?ref=geekslabs" target="_blank">TK Yoon</a> All rights reserved.</span>
+        <!-- <span class="right"> Design and Developed by <a class="grey-text text-lighten-4" href="http://geekslabs.com/">GeeksLabs</a></span> -->
         </div>
     </div>
   </footer>
@@ -588,6 +592,13 @@
     <script type="text/javascript" src="js/plugins.min.js"></script>
     <!--custom-script.js - Add your own theme custom JS-->
     <script type="text/javascript" src="js/custom-script.js"></script>
+    
+    
+    <!-- vue.js 선언 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    
+    
+    
     <script type="text/javascript">
     /*
      * Masonry container for blog page
@@ -615,6 +626,57 @@
     	});
     	
     });
+    
+    var app2 = new Vue({
+		el: '#modal-fixed-footer'
+		, data: {
+			contents: ""
+			, preContents: ""
+			, line : 1
+		}
+    	, methods: {
+    		enter : function(e) {
+    			console.log('test');
+    			console.log(e);
+    			preContents = "";
+    			console.log(this.contents);
+    			var lastline = this.contents.split("\n");
+    			console.log(lastline)
+    			console.log("a=" + lastline.length);
+    			console.log("a1=" + lastline[lastline.length-2]);
+    			if(lastline[lastline.length-2] == "") {
+    				return;
+    			}
+    			this.preContents = this.preContents + "<br/>" + this.line + " : " + lastline[lastline.length-2];
+    			this.line++;
+    		}
+    		, copyFn : function(e) {
+    			/* console.log('ctrl + v');
+    			console.log(e);
+    			console.log(this); */
+    			
+    			
+    			
+    		}
+    		, onPaste : function(e, e1, e2, e3, e4) {
+    			console.log(e);
+    			console.log(e1);
+    			console.log(e2);
+    			console.log(e3);
+    			console.log(e4);
+    			
+    		}
+    	}
+    /* 	, computed: {
+        	regMessage: function (e) {
+        		console.log(e);
+        		var cont =  this.message;
+        		console.log(cont)
+        		cont = cont.replace(/.$/, ".<br/>");
+		        return cont;
+	        }
+		} */
+	})
     </script>
 
 
