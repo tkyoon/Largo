@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <!--================================================================================
 	blog Name: Materialize - Material Design Admin Template
@@ -548,7 +548,7 @@
 
 				</div>
 				<div class="modal-footer">
-	                <a id="a_reg_post" href="#" class="waves-effect waves-red btn-flat modal-action " @click="save">저장</a>
+	                <a id="a_reg_post" href="#" class="waves-effect waves-red btn-flat modal-action" >저장</a>
 	                <a id="a_cancel_post" href="#" class="waves-effect waves-green btn-flat modal-action modal-close" @click="cancel">취소</a>
 				</div>
 			</div>
@@ -608,7 +608,8 @@
     <script src="js/plugins/imagesloaded.pkgd.min.js"></script>    
     
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->
-    <script type="text/javascript" src="js/plugins.min.js"></script>
+    <!-- <script type="text/javascript" src="js/plugins.min.js"></script> -->
+    <script type="text/javascript" src="js/plugins.js"></script>
     <!--custom-script.js - Add your own theme custom JS-->
     <script type="text/javascript" src="js/custom-script.js"></script>
     
@@ -656,12 +657,30 @@
     
     
     $( document ).ready(function() {
-    	/** */
-    	/* $('#a_reg_post').click(function() {
+    	$('.modal-trigger').leanModal({
+    		dismissible: false
+    	});
+    	 /* $('#li_reg_post').click(function() {
+    		 $('#modal2').leanModal({
+                 dismissible: false, // Modal can be dismissed by clicking outside of the modal
+                 opacity: .5, // Opacity of modal background
+                 in_duration: 300, // Transition in duration
+                 out_duration: 200, // Transition out duration
+                 ready: function() { alert('Taraaa'); }, // Callback for Modal open
+                 complete: function() { alert('Closed'); } // Callback for Modal close
+               }
+             );
+    	 }); */
+    	 
+    	 $('#a_reg_post').click(function() {
     		alert('글감등록 저장');
+    		//$('#modal2').leanModal('close');
+    		$('#modal2').closeModal();
+    		//$('#modal2').destoryModal();
     		return;
     	});
     	
+    	 /*
     	$('#a_cancel_post').click(function() {
     		alert('글감등록 취소');
     		return;
@@ -699,7 +718,7 @@
     		}
 	    	, save : function(e) {
 	    		console.log('save');
-	    		this.cancel(e);
+	    		$('#modal2').modal('close');
 	    		return;
 	    		this.isActive = true;
 	    		console.log(e);

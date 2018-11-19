@@ -102,7 +102,7 @@ $(function() {
   // Materialize Parallax
   $('.parallax').parallax();
   // Materialize Modal
-  $('.modal-trigger').leanModal({
+/*  $('.modal-trigger').leanModal({
       dismissible: true, // Modal can be dismissed by clicking outside of the modal
       opacity: .5, // Opacity of modal background
       in_duration: 300, // Transition in duration
@@ -113,7 +113,7 @@ $(function() {
       complete: function() { 
       //alert('Closed'); 
       } // Callback for Modal close
-  });
+  });*/
 
   // Materialize scrollSpy
   $('.scrollspy').scrollSpy();
