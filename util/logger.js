@@ -19,7 +19,8 @@ var log = require('tracer').colorConsole({
 	transport: [
 		function (data) {
 			fs.appendFile('./log/pilsa.'+ moment(data.timestame).format('YYYY-MM-DD') +'.log', data.rawoutput + '\n', (err) => {
-				if (err) throw err;
+				//if (err) throw err;
+				if (err) console.error(err);
 			});
 		}
 		, function(data) {
