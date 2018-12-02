@@ -1,32 +1,93 @@
- <!DOCTYPE html>
-    <html>
-    <head>
-	    <meta charset="utf-8"/>
-	    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-	    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
-	    <meta name="google-signin-scope" content="profile email">
-	    <meta name="google-signin-client_id" content="574730025327-m4luufelijs5184n2kc3tfgg4tse6tj2.apps.googleusercontent.com">
-	    <title>필사의 일격 | Sign in</title>
-	    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-	    <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
-	    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    </head>
-    
-    <body>
-    <a id="kakao-login-btn"></a>
-    <a href="http://developers.kakao.com/logout"></a>
-    <div id="naverIdLogin"></div>
-    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark" data-width="221" data-height="50" data-longtitle="true"></div>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="description" content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
+  <meta name="keywords" content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
+  <meta name="google-signin-scope" content="profile email">
+  <meta name="google-signin-client_id" content="574730025327-m4luufelijs5184n2kc3tfgg4tse6tj2.apps.googleusercontent.com">
+  <title>필사의 일격 | Sign in</title>
+
+  <!-- Favicons-->
+  <link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">
+  <!-- Favicons-->
+  <link rel="apple-touch-icon-precomposed" href="images/favicon/apple-touch-icon-152x152.png">
+  <!-- For iPhone -->
+  <meta name="msapplication-TileColor" content="#00bcd4">
+  <meta name="msapplication-TileImage" content="images/favicon/mstile-144x144.png">
+  <!-- For Windows Phone -->
+
+
+  <!-- CORE CSS-->
+  
+  <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="css/style.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <!-- Custome CSS-->    
+    <link href="css/custom/custom.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="css/layouts/page-center.css" type="text/css" rel="stylesheet" media="screen,projection">
+
+  <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
+  <link href="js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
+  
+  <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+  <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  
+</head>
+
+<body class="" style="background-color: #ddd;">
+  <!-- Start Page Loading -->
+  <div id="loader-wrapper">
+      <div id="loader"></div>        
+      <div class="loader-section section-left"></div>
+      <div class="loader-section section-right"></div>
+  </div>
+  <!-- End Page Loading -->
+
+
+
+  <div id="login-page" class="row">
+    <div class="col s12 z-depth-4 card-panel">
+      <form class="login-form">
+        <div class="row">
+          <div class="input-field col s12 center">
+            <img src="images/custom/ci_round_blue.png" alt="" class="circle responsive-img valign profile-image-login">
+            <!-- <img src="images/login-logo.png" alt="" class="circle responsive-img valign profile-image-login"> -->
+            <p class="center login-form-text">필사의 일격<br/>소셜계정으로 로그인하세요</p>
+          </div>
+        </div>
+        <div class="row">
+        	<div class="input-field col s12 center">
+	        	<a id="kakao-login-btn"></a><a href="http://developers.kakao.com/logout"></a>
+	    		<div id="naverIdLogin"></div>
+	    		<div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark" data-width="221" data-height="50" data-longtitle="true" style="margin-left: 18px;"></div>
+	    	</div>
+    	</div>
     <script type='text/javascript'>
       //<![CDATA[
         // 사용할 앱의 JavaScript 키를 설정해 주세요.
-        Kakao.init('88adaba6886ceeffc8a42bd8e806f0a0');
+        Kakao.init('070ad7e336e509dd0982ef600812fc50');
         // 카카오 로그인 버튼을 생성합니다.
         Kakao.Auth.createLoginButton({
           container: '#kakao-login-btn',
           success: function(authObj) {
             console.log(authObj);
-            alert(JSON.stringify(authObj));
+            // 로그인 성공시, API를 호출합니다.
+            Kakao.API.request({
+              url: '/v2/user/me',
+              success: function(res) {
+				console.log(res)
+                alert(JSON.stringify(res));
+				fn_socialSignin('kakao', res);
+              },
+              fail: function(error) {
+                alert(JSON.stringify(error));
+              }
+            });
           },
           fail: function(err) {
              alert(JSON.stringify(err));
@@ -81,6 +142,99 @@
 	        console.log("ID Token: " + id_token);
 		};
     </script>
+        <!-- <div class="row margin">
+          <div class="input-field col s12">
+            <i class="mdi-social-person-outline prefix"></i>
+            <input id="username" type="text">
+            <label for="username" class="center-align">Username</label>
+          </div>
+        </div>
+        <div class="row margin">
+          <div class="input-field col s12">
+            <i class="mdi-action-lock-outline prefix"></i>
+            <input id="password" type="password">
+            <label for="password">Password</label>
+          </div>
+        </div>
+        <div class="row">          
+          <div class="input-field col s12 m12 l12  login-text">
+              <input type="checkbox" id="remember-me" />
+              <label for="remember-me">Remember me</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <a href="index.html" class="btn waves-effect waves-light col s12">Login</a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s6 m6 l6">
+            <p class="margin medium-small"><a href="page-register.html">Register Now!</a></p>
+          </div>
+          <div class="input-field col s6 m6 l6">
+              <p class="margin right-align medium-small"><a href="page-forgot-password.html">Forgot password ?</a></p>
+          </div>          
+        </div> -->
+
+      </form>
+    </div>
+  </div>
+
+
+
+  <!-- ================================================
+    Scripts
+    ================================================ -->
+
+  <!-- jQuery Library -->
+  <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>
+  <!--materialize js-->
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+  <!--prism-->
+  <script type="text/javascript" src="js/plugins/prism/prism.js"></script>
+  <!--scrollbar-->
+  <script type="text/javascript" src="js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+
+      <!--plugins.js - Some Specific JS codes for Plugin Settings-->
+    <script type="text/javascript" src="js/plugins.min.js"></script>
+    <!--custom-script.js - Add your own theme custom JS-->
+    <script type="text/javascript" src="js/custom-script.js"></script>
+
+<script type="text/javascript">
+function fn_socialSignin(type, data) {
 	
-    </body>
-    </html>
+	var param;
+	
+	if('kakao' == type) {
+		var param = {
+			userId : data.id
+			, userNm : data.properties.nickname
+			, email : data.kakao_account.email
+			, profileImage : data.properties.profile_image
+			, thumbnailImage : data.properties.thumbnail_image
+			, ageRange : data.kakao_account.age_range
+			, birthday : data.kakao_account.birthday
+			, gender : data.kakao_account.gender
+			, socialType : type
+		}
+	}
+	
+	$.ajax({
+	    url: '/social/signin'
+	    , async: true
+	    , type: 'POST'
+	    , data: param
+	    //dataType: 'text', // xml, json, script, html
+	    , beforeSend: function(jqXHR) {}
+	    , success: function(jqXHR) {
+	    	console.log(jqXHR);
+	    }
+	    , error: function(jqXHR) {}
+	    , complete: function(jqXHR) {}
+	});
+}
+
+</script>
+</body>
+
+</html>

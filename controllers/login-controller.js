@@ -59,7 +59,92 @@ router.post('/signin', function(req, res) {
 		return retObj.returnErrorRes(res, bizNm + '에러!', e.message);
 		
 	}
+});
+
+/**
+ * 소셜계정 로그인
+ * @param req
+ * @param res
+ * @returns user object
+ */ 
+router.post('/social/signin', function(req, res) {
+	var bizNm = '소셜로그인 ';
+	log.info(bizNm + '호출 %j', req.body);
 	
+	try {
+		
+		userModel.findOne({
+			userId 				: req.body.userId
+			, socialType		: req.body.socialType
+		}
+		, function(err, user) {
+			if (err) {
+				log.error(bizNm + '에러!', err);
+				return retObj.returnErrorRes(res, bizNm + '에러!', err.message);
+			}
+			
+			var param = {
+		        userId 				: req.body.userId
+		        , userNm 			: req.body.userNm
+		        , email 			: req.body.email
+		        , profileImage	 	: req.body.profileImage
+		        , thumbnailImage 	: req.body.thumbnailImage
+		        , ageRange		 	: req.body.ageRange
+		        , birthday		 	: req.body.birthday
+		        , genter		 	: req.body.genter
+		        , socialType	 	: req.body.socialType
+		    }
+			
+			//이미 가입한 계정
+			if(user) {
+				log.info(bizNm + '성공-이미 가입한 회원 %j', user);
+				
+				//기본정보 수정
+				userModel.findByIdAndUpdate(user_id, param, {new: true}, function (err, user) {
+					if (err) {
+			    		log.error(bizNm + '에러!', err);
+			    		return retObj.returnErrorRes(res, bizNm + '에러!', err.message);
+			    	}
+					
+					log.info('세션 생성 %s %s', user.userId, user.userNm);
+					req.session.userId = user.userId;
+					req.session.userNm = user.userNm;
+					
+					//접속로그 생성
+					accessModel.insertAccessLog(req.body.userId, true, util.getClientIp(req));
+					return retObj.returnSuccessRes(res, bizNm + '성공', user);
+			        
+			    });
+				
+			//가입하지 않았다면 user정보 등록
+			} else {
+				log.info(bizNm + '성공-최초 가입한 회원 %j', req.body);
+				
+				userModel.create(param, function(err, user) {
+			    	if (err) {
+			    		log.error(bizNm + '에러!', err);
+			    		return retObj.returnErrorRes(res, bizNm + '에러!', err.message);
+			    	}
+			    	log.debug('signedUser %j', user);
+			    	
+			    	log.info('세션 생성 %s %s', user.userId, user.userNm);
+					req.session.userId = user.userId;
+					req.session.userNm = user.userNm;
+					
+					//접속로그 생성
+					accessModel.insertAccessLog(req.body.userId, true, util.getClientIp(req));
+					return retObj.returnSuccessRes(res, bizNm + '성공', user);
+			    });
+				
+			}
+			
+		});
+		
+	} catch (e) {
+		log.error(bizNm + '에러!(Unexpected)', e);
+		return retObj.returnErrorRes(res, bizNm + '에러!', e.message);
+		
+	}
 });
 
 /**
@@ -151,10 +236,6 @@ router.post('/signup', function(req, res) {
 		log.error(bizNm + '에러!(Unexpected)', e);
 		return retObj.returnErrorRes(res, bizNm + '에러!', e.message);
 	}
-	
-	
-	
-	
 });
 
 module.exports = router;
