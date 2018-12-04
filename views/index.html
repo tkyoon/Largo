@@ -83,7 +83,7 @@
                     <ul id="ul_header_icon" class="right hide-on-med-and-down">
                     	<!-- 로그인 아이콘 -->
                         <li>
-                        	<a href="#" class="waves-effect waves-light" @click="login"><i class="mdi-action-account-box"></i></a>
+                        	<a href="#modal_login" class="waves-effect waves-light modal-trigger" @click="login"><i class="mdi-action-account-box"></i></a>
                         </li>
                         <!-- 글감등록 아이콘 -->
                         <li id="li_reg_post">
@@ -563,6 +563,11 @@
 	</div>
 </div>
 
+
+<div id="modal_login" class="modal modal-fixed-footer modal-close">
+    <div id="div_login_pop" class="modal-content">
+	</div>
+</div>
   <!-- //////////////////////////////////////////////////////////////////////////// -->
 
 <!-- <div id="app">
@@ -627,6 +632,11 @@
     <!-- vue.js 선언 -->
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
+    
+	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+	<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
     
     
     
@@ -708,6 +718,14 @@
     		login : function(e){
     			console.log('login');
     			
+    			$.get('/login.html', function( data ) {
+    		        // use this method you need to handle the response from the view 
+    		        // with rails Server-Generated JavaScript Responses this is portion will be in a .js.erb file
+    		        console.log(data)
+    		        $( "#div_login_pop" ).html(data);
+    		    });
+    			
+    			//$('#modal_login').leanModal({
     			$('.modal-trigger').leanModal({
     	    		dismissible: false
     	    	});

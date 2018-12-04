@@ -93,6 +93,7 @@ router.post('/social/signin', function(req, res) {
 		        , birthday		 	: req.body.birthday
 		        , genter		 	: req.body.genter
 		        , socialType	 	: req.body.socialType
+		        , lastAccessDate 	: Date.now()
 		    }
 			
 			//이미 가입한 계정
@@ -100,7 +101,7 @@ router.post('/social/signin', function(req, res) {
 				log.info(bizNm + '성공-이미 가입한 회원 %j', user);
 				
 				//기본정보 수정
-				userModel.findByIdAndUpdate(user_id, param, {new: true}, function (err, user) {
+				userModel.findByIdAndUpdate(user._id, param, {new: true}, function (err, user) {
 					if (err) {
 			    		log.error(bizNm + '에러!', err);
 			    		return retObj.returnErrorRes(res, bizNm + '에러!', err.message);

@@ -10,7 +10,7 @@
 * tb_user create index
  
 ```
-	pilsa.tb_user.createIndex( { userId: 1 }, { unique: true } )
+	pilsa.tb_user.createIndex( { userId: 1, socialType : 1 }, { unique: true } )
 ```
 
 * tb_transcribe create index
