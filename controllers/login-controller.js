@@ -110,6 +110,7 @@ router.post('/social/signin', function(req, res) {
 					log.info('세션 생성 %s %s', user.userId, user.userNm);
 					req.session.userId = user.userId;
 					req.session.userNm = user.userNm;
+					req.session.profile = user;
 					
 					//접속로그 생성
 					accessModel.insertAccessLog(req.body.userId, true, util.getClientIp(req));
@@ -131,6 +132,7 @@ router.post('/social/signin', function(req, res) {
 			    	log.info('세션 생성 %s %s', user.userId, user.userNm);
 					req.session.userId = user.userId;
 					req.session.userNm = user.userNm;
+					req.session.profile = user;
 					
 					//접속로그 생성
 					accessModel.insertAccessLog(req.body.userId, true, util.getClientIp(req));
@@ -140,6 +142,40 @@ router.post('/social/signin', function(req, res) {
 			}
 			
 		});
+		
+	} catch (e) {
+		log.error(bizNm + '에러!(Unexpected)', e);
+		return retObj.returnErrorRes(res, bizNm + '에러!', e.message);
+		
+	}
+});
+
+
+/**
+ * 프로필 정보 요청
+ * - 세션에 정보가 있는지를 판단
+ * => 정보가 있다면 프로필 정보 리턴 => 프로필 정보 표시
+ * => 정보가 없다면 널 => 로그인 아이콘 표시
+ * [TK Yoon 2018. 12. 7. 오전 8:15:17]
+ * @param req
+ * @param res
+ * @returns
+ */
+router.post('/profile', function(req, res) {
+	var bizNm = '프로필정보 조회 ';
+	log.info(bizNm + '호출 %j', req.body);
+	
+	try {
+		
+		if(req.session.profile) {
+			log.info('로그인 정보가 세션에 있어요! %j', req.session.profile);
+			return retObj.returnSuccessRes(res, bizNm + '성공', req.session.profile);
+			
+		} else {
+			log.info('로그인 정보가 세션에 없어요!');
+			return retObj.returnBadReqRes(res, bizNm + '실패', "");
+			
+		}
 		
 	} catch (e) {
 		log.error(bizNm + '에러!(Unexpected)', e);

@@ -82,6 +82,25 @@
                     </div>
                     <ul id="ul_header_icon" class="right hide-on-med-and-down">
                     	<!-- 로그인 아이콘 -->
+						<li>
+							<a href="javascript:void(0);" class="waves-effect waves-block waves-light translation-button" data-activates="translation-dropdown">
+								<img src="http://k.kakaocdn.net/dn/k5mwK/btqq6O0vMbC/fsQrFxpTeO1VfUBBcCUCt1/profile_110x110c.jpg" alt="USA" style="width: 40px;height: 40px;border-radius: 50%;">
+							</a>
+							<!-- <ul id="translation-dropdown" class="dropdown-content" style="white-space: nowrap; position: absolute; top: 67px; left: 1653px; opacity: 1; display: none;">
+						    	<li>
+						        	<a href="#!"><img src="images/flag-icons/United-States.png" alt="English">  <span class="language-select">English</span></a>
+					            </li>
+						        <li>
+						        	<a href="#!"><img src="images/flag-icons/France.png" alt="French">  <span class="language-select">French</span></a>
+					            </li>
+					        	<li>
+						        	<a href="#!"><img src="images/flag-icons/China.png" alt="Chinese">  <span class="language-select">Chinese</span></a>
+					            </li>
+						        <li>
+						        	<a href="#!"><img src="images/flag-icons/Germany.png" alt="German">  <span class="language-select">German</span></a>
+					            </li>
+					        </ul> -->
+                        </li>
                         <li>
                         	<a href="#modal_login" class="waves-effect waves-light modal-trigger" @click="login"><i class="mdi-action-account-box"></i></a>
                         </li>
@@ -197,7 +216,8 @@
 		                            </a>
 		                        </div> -->
 		                        <ul class="card-action-buttons">
-		                            <li><a class="btn-floating waves-effect waves-light green accent-4"><i class="mdi-av-play-arrow"></i></a>
+		                            <li>
+		                            	<a class="btn-floating waves-effect waves-light green accent-4"><i class="mdi-av-play-arrow"></i></a>
 		                            </li>                            
 		                            <li><a class="btn-floating waves-effect waves-light light-blue"><i class="mdi-action-info activator"></i></a>
 		                            </li>
@@ -709,13 +729,49 @@
     	
     });
     
+    /**
+     * 
+     *
+     *
+     */
     var headerIcon = new Vue({
     	el : "#ul_header_icon"
     	, data : {
     		
     	}
+    	, mounted () {
+    		console.log('mounted');		
+	    	this.getProfile();
+    	}
     	, methods : {
-    		login : function(e){
+    		/**
+    		 * 세션정보가 있는지 확인하여 프로필 정보를 조회 
+     		 */
+    		getProfile : function(e){
+    			console.log('getProfile');    			
+    			axios.post('/profile', {})
+	    		.then(response => {
+	    			console.log(response.data)
+	    			
+	    			//성공
+	    			if(response.data.code = '1') {
+	    				
+	    				
+    				//실패
+	    			} else {
+	    				
+	    				
+	    			}
+	    			
+	    		})
+	    		.catch(error => {
+	    		    console.log(error.response);
+	    		    var data = error.response.data;
+	    		    alert(data.msg);
+	    		    return;
+	    		});
+    		}
+    		, login : function(e){
     			console.log('login');
     			
     			$.get('/login.html', function( data ) {
