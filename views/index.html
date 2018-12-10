@@ -81,29 +81,47 @@
                         <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize"/>
                     </div>
                     <ul id="ul_header_icon" class="right hide-on-med-and-down">
+                    	<li>
+                    		<a href="javascript:void(0);" class="waves-effect waves-block waves-light translation-button" data-activates="translation-dropdown"><img src="images/flag-icons/United-States.png" alt="USA"></a>
+                    		<ul id="translation-dropdown" class="dropdown-content" style="white-space: nowrap; position: absolute; top: 64px; left: 1122px; opacity: 1; display: none;">
+			                      <li>
+			                        <a href="#"><i class="mdi-hardware-keyboard-tab"></i> Logout
+			                      </li>
+			                      <li>
+			                        <a href="#!"><img src="images/flag-icons/United-States.png" alt="English">  <span class="language-select">English</span></a>
+			                      </li>
+			                    </ul>
+                    	</li>
                     	<!-- 로그인 아이콘 -->
-						<li>
+						<li v-if="hasSession">
 							<a href="javascript:void(0);" class="waves-effect waves-block waves-light translation-button" data-activates="translation-dropdown">
-								<img src="http://k.kakaocdn.net/dn/k5mwK/btqq6O0vMbC/fsQrFxpTeO1VfUBBcCUCt1/profile_110x110c.jpg" alt="USA" style="width: 40px;height: 40px;border-radius: 50%;">
+								<img v-bind:src="profile.profileImage" title="" style="width: 40px;height: 40px;border-radius: 50%;">
+								{{profile.userNm}}
 							</a>
-							<!-- <ul id="translation-dropdown" class="dropdown-content" style="white-space: nowrap; position: absolute; top: 67px; left: 1653px; opacity: 1; display: none;">
-						    	<li>
-						        	<a href="#!"><img src="images/flag-icons/United-States.png" alt="English">  <span class="language-select">English</span></a>
-					            </li>
-						        <li>
-						        	<a href="#!"><img src="images/flag-icons/France.png" alt="French">  <span class="language-select">French</span></a>
-					            </li>
-					        	<li>
-						        	<a href="#!"><img src="images/flag-icons/China.png" alt="Chinese">  <span class="language-select">Chinese</span></a>
-					            </li>
-						        <li>
-						        	<a href="#!"><img src="images/flag-icons/Germany.png" alt="German">  <span class="language-select">German</span></a>
-					            </li>
-					        </ul> -->
-                        </li>
-                        <li>
+						</li>
+                        <li v-else>
                         	<a href="#modal_login" class="waves-effect waves-light modal-trigger" @click="login"><i class="mdi-action-account-box"></i></a>
                         </li>
+                        
+                        
+<!--                         <div class="col col s8 m8 l8">
+		                        <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn active" href="#" data-activates="profile-dropdown">John Doe<i class="mdi-navigation-arrow-drop-down right"></i></a><ul id="profile-dropdown" class="dropdown-content active" style="width: 128px; position: absolute; top: 57px; left: 101.234px; opacity: 1; display: block;">
+		                            <li><a href="#"><i class="mdi-action-face-unlock"></i> Profile</a>
+		                            </li>
+		                            <li><a href="#"><i class="mdi-action-settings"></i> Settings</a>
+		                            </li>
+		                            <li><a href="#"><i class="mdi-communication-live-help"></i> Help</a>
+		                            </li>
+		                            <li class="divider"></li>
+		                            <li><a href="#"><i class="mdi-action-lock-outline"></i> Lock</a>
+		                            </li>
+		                            <li><a href="#"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
+		                            </li>
+		                        </ul>
+		                        <p class="user-roal">Administrator</p>
+		                    </div>
+                        
+ -->                        
                         <!-- 글감등록 아이콘 -->
                         <li id="li_reg_post">
                         	<a href="#modal2" class="waves-effect waves-light modal-trigger"><i class="mdi-editor-mode-edit"></i></a>
@@ -737,7 +755,8 @@
     var headerIcon = new Vue({
     	el : "#ul_header_icon"
     	, data : {
-    		
+    		hasSession : false
+    		, profile : {}
     	}
     	, mounted () {
     		console.log('mounted');		
@@ -753,57 +772,33 @@
 	    		.then(response => {
 	    			console.log(response.data)
 	    			
-	    			//성공
-	    			if(response.data.code = '1') {
+	    			//세션 존재
+	    			if(response.data.data != '') {
+	    				console.log('로그인 성공')
+	    				this.hasSession = true;
+	    				this.profile = response.data.data;
 	    				
-	    				
-    				//실패
+    				//세션 없음
 	    			} else {
-	    				
+	    				this.hasSession = false;
 	    				
 	    			}
 	    			
 	    		})
 	    		.catch(error => {
 	    		    console.log(error.response);
-	    		    var data = error.response.data;
-	    		    alert(data.msg);
+	    		    /* var data = error.response.data;
+	    		    alert(data.msg); */
 	    		    return;
 	    		});
     		}
+    	
+		   	/**
+		   	 * 로그인 아이콘 클릭
+		   	 */
     		, login : function(e){
     			console.log('login');
-    			
-    			$.get('/login.html', function( data ) {
-    		        // use this method you need to handle the response from the view 
-    		        // with rails Server-Generated JavaScript Responses this is portion will be in a .js.erb file
-    		        console.log(data)
-    		        $( "#div_login_pop" ).html(data);
-    		    });
-    			
-    			//$('#modal_login').leanModal({
-    			$('.modal-trigger').leanModal({
-    	    		dismissible: false
-    	    	});
-    			
-    			
-    			/* swal({   
-    				title: "로그인"
-    				, text: "소셜계정으로 로그인해보아요!"
-                    , type: "input"
-                    , showCancelButton: true
-                    , closeOnConfirm: false
-                    , animation: "slide-from-top"
-                    , inputPlaceholder: "Write something" 
-                }
-    			, function(inputValue) {   
-					if (inputValue === false) return false;      
-                    if (inputValue === "") {     
-						swal.showInputError("You need to write something!");     
-						return false   
-					}      
-					swal("Nice!", "You wrote: " + inputValue, "success"); 
-               }); */
+    			location.href = "/login.html";
     		}
     	}
     });

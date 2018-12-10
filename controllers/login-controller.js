@@ -173,7 +173,7 @@ router.post('/profile', function(req, res) {
 			
 		} else {
 			log.info('로그인 정보가 세션에 없어요!');
-			return retObj.returnBadReqRes(res, bizNm + '실패', "");
+			return retObj.returnSuccessRes(res, bizNm + '성공', "");
 			
 		}
 		
