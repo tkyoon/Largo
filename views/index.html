@@ -81,27 +81,37 @@
                         <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize"/>
                     </div>
                     <ul id="ul_header_icon" class="right hide-on-med-and-down">
-                    	<li>
-                    		<a href="javascript:void(0);" class="waves-effect waves-block waves-light translation-button" data-activates="translation-dropdown"><img src="images/flag-icons/United-States.png" alt="USA"></a>
+                    	<!-- <li>
+                    		<a href="javascript:void(0);" class="waves-effect waves-block waves-light translation-button" data-activates="translation-dropdown"><img src="images/flag-icons/United-States.png"></a>
                     		<ul id="translation-dropdown" class="dropdown-content" style="white-space: nowrap; position: absolute; top: 64px; left: 1122px; opacity: 1; display: none;">
-			                      <li>
-			                        <a href="#"><i class="mdi-hardware-keyboard-tab"></i> Logout
-			                      </li>
-			                      <li>
-			                        <a href="#!"><img src="images/flag-icons/United-States.png" alt="English">  <span class="language-select">English</span></a>
-			                      </li>
-			                    </ul>
-                    	</li>
-                    	<!-- 로그인 아이콘 -->
+								<li>
+			                    	<a href="#"><i class="mdi-hardware-keyboard-tab" style="color:#444;font-size: 14px;font-weight: 400;"> &nbsp;Logout</i></a>
+								</li>
+							</ul>
+                    	</li> -->
+                    	<!-- 글감등록 아이콘 -->
+                        <li id="li_reg_post">
+                        	<a href="#modal2" class="waves-effect waves-light modal-trigger"><i class="mdi-editor-mode-edit"></i></a>
+                        </li>
+                        
+                    	
 						<li v-if="hasSession">
 							<a href="javascript:void(0);" class="waves-effect waves-block waves-light translation-button" data-activates="translation-dropdown">
-								<img v-bind:src="profile.profileImage" title="" style="width: 40px;height: 40px;border-radius: 50%;">
-								{{profile.userNm}}
+								<img v-bind:src="profile.profileImage" title="" style="width: 40px;height: 40px;border-radius: 50%;"> {{profile.userNm}}
 							</a>
 						</li>
+						<li v-if="hasSession">
+							<a href="javascript:void(0);" class="waves-effect waves-block waves-light translation-button" data-activates="translation-dropdown">
+								<a href="#" @click="logout"><i class="mdi-hardware-keyboard-tab"></i></a>
+								<!-- <a href="#"><i class="mdi-hardware-keyboard-tab" style="color:#444;font-size: 14px;font-weight: 400;"> &nbsp;Logout</i></a> -->
+							</a>
+						</li>
+						
+						<!-- 로그인 아이콘 -->
                         <li v-else>
                         	<a href="#modal_login" class="waves-effect waves-light modal-trigger" @click="login"><i class="mdi-action-account-box"></i></a>
                         </li>
+                        
                         
                         
 <!--                         <div class="col col s8 m8 l8">
@@ -120,12 +130,8 @@
 		                        </ul>
 		                        <p class="user-roal">Administrator</p>
 		                    </div>
-                        
  -->                        
-                        <!-- 글감등록 아이콘 -->
-                        <li id="li_reg_post">
-                        	<a href="#modal2" class="waves-effect waves-light modal-trigger"><i class="mdi-editor-mode-edit"></i></a>
-                        </li>
+                        
                     </ul>
                     <!-- translation-button -->
                     <!-- <ul id="translation-dropdown" class="dropdown-content">
@@ -799,6 +805,25 @@
     		, login : function(e){
     			console.log('login');
     			location.href = "/login.html";
+    		}
+		   	
+		   	/**
+		   	 * 로그아우 아이콘 클릭
+		   	 */
+    		, logout : function(e){
+    			console.log('logout');
+    			var socialType = this.profile.socialType;
+    			console.log(socialType);
+    			
+    			if('kakao' == socialType) {
+    				
+    			} else if('naver' == socialType) {
+    				
+    			} else if('google' == socialType) {
+    				
+    			}
+    			
+    			
     		}
     	}
     });
