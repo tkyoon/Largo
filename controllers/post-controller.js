@@ -95,7 +95,7 @@ router.get('/', function(req, res) {
 			page : page
 			, limit : rows
 			, sort: sort
-			
+			, populate: 'regId'
 		};
 		
 		//검색조건에 들어가지 않도록 null 처리

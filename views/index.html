@@ -80,7 +80,7 @@
                     <ul class="left">
                     	<!-- 로고 -->
                       <!-- <li><h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1"><img src="images/materialize-logo.png" alt="materialize logo"></a> <span class="logo-text">Materialize</span></h1></li> -->
-                      <li><h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1"><img src="images/custom/ci_text_400.png" alt="materialize logo"></a> <span class="logo-text"></span></h1></li>
+                      <li><h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1"><img src="images/custom/ci_t.png" alt="materialize logo"></a> <span class="logo-text"></span></h1></li>
                     </ul>
                     <div class="header-search-wrapper hide-on-med-and-down">
                         <i class="mdi-action-search"></i>
@@ -97,7 +97,7 @@
                     	</li> -->
                     	<!-- 글감등록 아이콘 -->
                         <li id="li_reg_post">
-                        	<a href="#modal2" class="waves-effect waves-light modal-trigger"><i class="mdi-editor-mode-edit"></i></a>
+                        	<a href="#pop_add_post" class="waves-effect waves-light modal-trigger"><i class="mdi-editor-mode-edit"></i></a>
                         </li>
                         
                     	
@@ -235,49 +235,42 @@
            		<div class="divider"></div> -->
            		
             		<!-- start blog list -->
-		            <div id="blog-posts" class="row">
+		            <div id="div_blog_posts" class="row">
 		                <div class="blog-sizer"></div>
 		
-		                <div class="blog">
+		                <div class="blog" v-for="post in list.posts">
 		                    <div class="card">
-		                        <!-- <div class="s2 card-image waves-effect waves-block waves-light">
-		                            <a href="#">
-		                            	<img src="images/img2.jpg" alt="blog-img">
-		                            </a>
-		                        </div> -->
 		                        <ul class="card-action-buttons">
 		                            <li>
 		                            	<a class="btn-floating waves-effect waves-light green accent-4"><i class="mdi-av-play-arrow"></i></a>
 		                            </li>                            
-		                            <li><a class="btn-floating waves-effect waves-light light-blue"><i class="mdi-action-info activator"></i></a>
-		                            </li>
 		                        </ul>
 		                        <div class="card-content">
 		                            <p class="row">
-		                              <span class="left"><a href="">위대한 유산 - 첫번째 조언 공은 여기서 멈춘다.</a></span>
-		                              <!-- <span class="right">18th June, 2015</span> -->
+		                              <span class="left title-ellipsis"><a href="#">{{post.title}}</a></span>
 		                            </p>
-		                            <h1 class="card-title grey-text text-darken-4">
+		                            <h1 class="card-title grey-text text-darken-4 contents-ellipsis">
 		                            	<a href="#" class="grey-text text-darken-4">
-		                            		위대한 유산 - 첫번째 조언 공은 여기서 멈춘다.위대한 유산 - 첫번째 조언 공은 여기서 멈춘다.위대한 유산 - 첫번째 조언 공은 여기서 멈춘다.
+		                            		{{post.contents}}
 		                            	</a>
 		                            </h1>
-		                            <p class="blog-post-content grey-text text-darken-1 text-ellipsis">출처 : 내 생각내 생각내 생각내 생각내 생각내 생각내 생각내 생각</p>
+		                            <p class="blog-post-content grey-text text-darken-1 text-ellipsis">출처 : {{post.quatation}}</p>
 		                            <div class="row">
 		                              <div class="col s3">
-		                                <img src="images/avatar.jpg" alt="" class="circle responsive-img valign profile-image">
+		                                <!-- <img src="images/avatar.jpg" alt="" class="circle responsive-img valign profile-image"> -->
+		                                <img :src="post.regId.profileImage" alt="" class="circle responsive-img valign profile-image">
 		                              </div>
-		                              <div class="col s9"> By <a href="#">윤태경</a><br/>2019/01/01 12:30</div>
+		                              <div class="col s9"> By <a href="#">{{post.regId.userNm}}</a><br/>{{post.regDate}}</div>
 		                            </div>
 		                        </div>
-		                        <div class="card-reveal">
+		                        <!-- <div class="card-reveal">
 		                            <span class="card-title grey-text text-darken-4"><i class="mdi-navigation-close right"></i> Apple MacBook Pro A1278 13"</span>
 		                            <p>Here is some more information about this blog that is only revealed once clicked on.</p>
-		                        </div>
+		                        </div> -->
 		                    </div>
 		                </div>
 		
-		                <div class="blog">
+		                <!-- org :  <div class="blog">
 		                    <div class="card">
 		                        <div class="card-image waves-effect waves-block waves-light">
 		                            <a href="#"><img src="images/img3.jpg" alt="blog-img">
@@ -309,75 +302,7 @@
 		                            <p>Here is some more information about this blog that is only revealed once clicked on.</p>
 		                        </div>
 		                    </div>
-		                </div>
-		                
-		                <div class="blog">
-		                    <div class="card">
-		                        <div class="card-image waves-effect waves-block waves-light">
-		                            <a href="#"><img src="images/img3.jpg" alt="blog-img">
-		                            </a>
-		                        </div>
-		                        <ul class="card-action-buttons">
-		                            <li><a class="btn-floating waves-effect waves-light green accent-4"><i class="mdi-social-share"></i></a>
-		                            </li>                            
-		                            <li><a class="btn-floating waves-effect waves-light light-blue"><i class="mdi-action-info activator"></i></a>
-		                            </li>
-		                        </ul>
-		                        <div class="card-content">
-		                            <p class="row">
-		                              <span class="left"><a href="">Web Design</a></span>
-		                              <span class="right">18th June, 2015</span>
-		                            </p>
-		                            <h4 class="card-title grey-text text-darken-4"><a href="#" class="grey-text text-darken-4">Material Design Card - For Blog Post Article</a>
-		                            </h4>
-		                            <p class="blog-post-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-		                            <div class="row">
-		                              <div class="col s2">
-		                                <img src="images/avatar.jpg" alt="" class="circle responsive-img valign profile-image">
-		                              </div>
-		                              <div class="col s9"> By <a href="#">John Doe</a></div>
-		                            </div>
-		                        </div>
-		                        <div class="card-reveal">
-		                            <span class="card-title grey-text text-darken-4"><i class="mdi-navigation-close right"></i> Apple MacBook Pro A1278 13"</span>
-		                            <p>Here is some more information about this blog that is only revealed once clicked on.</p>
-		                        </div>
-		                    </div>
-		                </div>
-		                
-		                <div class="blog">
-		                    <div class="card">
-		                        <div class="card-image waves-effect waves-block waves-light">
-		                            <a href="#"><img src="images/img3.jpg" alt="blog-img">
-		                            </a>
-		                        </div>
-		                        <ul class="card-action-buttons">
-		                            <li><a class="btn-floating waves-effect waves-light green accent-4"><i class="mdi-social-share"></i></a>
-		                            </li>                            
-		                            <li><a class="btn-floating waves-effect waves-light light-blue"><i class="mdi-action-info activator"></i></a>
-		                            </li>
-		                        </ul>
-		                        <div class="card-content">
-		                            <p class="row">
-		                              <span class="left"><a href="">Web Design</a></span>
-		                              <span class="right">18th June, 2015</span>
-		                            </p>
-		                            <h4 class="card-title grey-text text-darken-4"><a href="#" class="grey-text text-darken-4">Material Design Card - For Blog Post Article</a>
-		                            </h4>
-		                            <p class="blog-post-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-		                            <div class="row">
-		                              <div class="col s2">
-		                                <img src="images/avatar.jpg" alt="" class="circle responsive-img valign profile-image">
-		                              </div>
-		                              <div class="col s9"> By <a href="#">John Doe</a></div>
-		                            </div>
-		                        </div>
-		                        <div class="card-reveal">
-		                            <span class="card-title grey-text text-darken-4"><i class="mdi-navigation-close right"></i> Apple MacBook Pro A1278 13"</span>
-		                            <p>Here is some more information about this blog that is only revealed once clicked on.</p>
-		                        </div>
-		                    </div>
-		                </div>
+		                </div> -->
 		
 		            </div>
 		            <!--/ end blog list -->
@@ -409,144 +334,6 @@
       <!-- END CONTENT -->
 
       <!-- //////////////////////////////////////////////////////////////////////////// -->
-      <!-- START RIGHT SIDEBAR NAV-->
-      <aside id="right-sidebar-nav">
-        <ul id="chat-out" class="side-nav rightside-navigation">
-            <li class="li-hover">
-            <a href="#" data-activates="chat-out" class="chat-close-collapse right"><i class="mdi-navigation-close"></i></a>
-            <div id="right-search" class="row">
-                <form class="col s12">
-                    <div class="input-field">
-                        <i class="mdi-action-search prefix"></i>
-                        <input id="icon_prefix" type="text" class="validate">
-                        <label for="icon_prefix">Search</label>
-                    </div>
-                </form>
-            </div>
-            </li>
-            <li class="li-hover">
-                <ul class="chat-collapsible" data-collapsible="expandable">
-                <li>
-                    <div class="collapsible-header teal white-text active"><i class="mdi-social-whatshot"></i>Recent Activity</div>
-                    <div class="collapsible-body recent-activity">
-                        <div class="recent-activity-list chat-out-list row">
-                            <div class="col s3 recent-activity-list-icon"><i class="mdi-action-add-shopping-cart"></i>
-                            </div>
-                            <div class="col s9 recent-activity-list-text">
-                                <a href="#">just now</a>
-                                <p>Jim Doe Purchased new equipments for zonal office.</p>
-                            </div>
-                        </div>
-                        <div class="recent-activity-list chat-out-list row">
-                            <div class="col s3 recent-activity-list-icon"><i class="mdi-device-airplanemode-on"></i>
-                            </div>
-                            <div class="col s9 recent-activity-list-text">
-                                <a href="#">Yesterday</a>
-                                <p>Your Next flight for USA will be on 15th August 2015.</p>
-                            </div>
-                        </div>
-                        <div class="recent-activity-list chat-out-list row">
-                            <div class="col s3 recent-activity-list-icon"><i class="mdi-action-settings-voice"></i>
-                            </div>
-                            <div class="col s9 recent-activity-list-text">
-                                <a href="#">5 Days Ago</a>
-                                <p>Natalya Parker Send you a voice mail for next conference.</p>
-                            </div>
-                        </div>
-                        <div class="recent-activity-list chat-out-list row">
-                            <div class="col s3 recent-activity-list-icon"><i class="mdi-action-store"></i>
-                            </div>
-                            <div class="col s9 recent-activity-list-text">
-                                <a href="#">Last Week</a>
-                                <p>Jessy Jay open a new store at S.G Road.</p>
-                            </div>
-                        </div>
-                        <div class="recent-activity-list chat-out-list row">
-                            <div class="col s3 recent-activity-list-icon"><i class="mdi-action-settings-voice"></i>
-                            </div>
-                            <div class="col s9 recent-activity-list-text">
-                                <a href="#">5 Days Ago</a>
-                                <p>Natalya Parker Send you a voice mail for next conference.</p>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="collapsible-header light-blue white-text active"><i class="mdi-editor-attach-money"></i>Sales Repoart</div>
-                    <div class="collapsible-body sales-repoart">
-                        <div class="sales-repoart-list  chat-out-list row">
-                            <div class="col s8">Target Salse</div>
-                            <div class="col s4"><span id="sales-line-1"></span>
-                            </div>
-                        </div>
-                        <div class="sales-repoart-list chat-out-list row">
-                            <div class="col s8">Payment Due</div>
-                            <div class="col s4"><span id="sales-bar-1"></span>
-                            </div>
-                        </div>
-                        <div class="sales-repoart-list chat-out-list row">
-                            <div class="col s8">Total Delivery</div>
-                            <div class="col s4"><span id="sales-line-2"></span>
-                            </div>
-                        </div>
-                        <div class="sales-repoart-list chat-out-list row">
-                            <div class="col s8">Total Progress</div>
-                            <div class="col s4"><span id="sales-bar-2"></span>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="collapsible-header red white-text"><i class="mdi-action-stars"></i>Favorite Associates</div>
-                    <div class="collapsible-body favorite-associates">
-                        <div class="favorite-associate-list chat-out-list row">
-                            <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
-                            </div>
-                            <div class="col s8">
-                                <p>Eileen Sideways</p>
-                                <p class="place">Los Angeles, CA</p>
-                            </div>
-                        </div>
-                        <div class="favorite-associate-list chat-out-list row">
-                            <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
-                            </div>
-                            <div class="col s8">
-                                <p>Zaham Sindil</p>
-                                <p class="place">San Francisco, CA</p>
-                            </div>
-                        </div>
-                        <div class="favorite-associate-list chat-out-list row">
-                            <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img offline-user valign profile-image">
-                            </div>
-                            <div class="col s8">
-                                <p>Renov Leongal</p>
-                                <p class="place">Cebu City, Philippines</p>
-                            </div>
-                        </div>
-                        <div class="favorite-associate-list chat-out-list row">
-                            <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
-                            </div>
-                            <div class="col s8">
-                                <p>Weno Carasbong</p>
-                                <p>Tokyo, Japan</p>
-                            </div>
-                        </div>
-                        <div class="favorite-associate-list chat-out-list row">
-                            <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img offline-user valign profile-image">
-                            </div>
-                            <div class="col s8">
-                                <p>Nusja Nawancali</p>
-                                <p class="place">Bangkok, Thailand</p>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                </ul>
-            </li>
-        </ul>
-      </aside>
-      <!-- LEFT RIGHT SIDEBAR NAV-->
-
     </div>
     <!-- END WRAPPER -->
 
@@ -556,7 +343,7 @@
 <div id="modal-fixed-footer">
 	<div class="row">
     	<div class="col">
-        	<div id="modal2" class="modal modal-fixed-footer modal-close">
+        	<div id="pop_add_post" class="modal modal-fixed-footer modal-close">
             	<div class="modal-content">
                 
    
@@ -575,7 +362,7 @@
 					</div>
                     <div class="input-field col s12">
                     	<textarea id="txtarea_contents" class="materialize-textarea validate" placeholder="필사 입력시 개행 기준으로 입력단위가 지정됩니다." v-model="contents" :maxlength="max"></textarea>
-                        <label for="txtarea_contents" @click='preview'>내용({{contents.length}}/4000)</label>
+                        <label for="txtarea_contents">내용({{contents.length}}/4000)</label>
 					</div>
                     <div class="input-field col s12">
                     	<input id="ipt_quatation" type="text" class="validate" v-model="quatation">
@@ -583,21 +370,6 @@
 					</div>
 				</div>
 				</form>
-				<!-- 
-                <div class="col s6">
-                	<div class="row">
-                		내용 미리보기
-                	</div>
-                	
-                	<div class="row s12" style="border:1px dashed #9e9e9e;padding: 10px;" v-html="preContents">
-                	</div>
-                	<div class="row s12" style="border:1px dashed #9e9e9e;padding: 10px;">
-	                	{{ regMessage }}
-                	</div>
-                	
-                	
-				</div>
-				 -->
 			</div>
 		</div>
 	</div>
@@ -623,19 +395,6 @@
 <!-- <div id="app">
   {{ info }}
 </div> -->
-
-<div id="app">
-  <h1>Bitcoin Price Index</h1>
-  <div
-    v-for="currency in info"
-    class="currency"
-  >
-    {{ currency.description }}:
-    <span class="lighten">
-      <span v-html="currency.symbol"></span>{{ currency.rate_float | currencydecimal }}
-    </span>
-  </div>
-</div>
 
   <!-- START FOOTER -->
   <footer class="page-footer">
@@ -693,43 +452,10 @@
     
     <script type="text/javascript">
     
-    
-    /* new Vue({
-    	  el: '#app',
-    	  data () {
-    	    return {
-    	      info: null
-    	    }
-    	  },
-    	  filters: {
-    		  currencydecimal (value) {
-    		    return value.toFixed(2)
-    		  }
-    		},
-    	  mounted () {
-    	    axios
-    	      .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-    	      .then(response => (this.info = response.data.bpi))
-    	  }
-    	}) */
-    
-    /*
-     * Masonry container for blog page
-     */
-    var $containerBlog = $("#blog-posts");
-    $containerBlog.imagesLoaded(function() {
-      $containerBlog.masonry({
-        itemSelector: ".blog",
-        columnWidth: ".blog-sizer",
-      });
-    });
-    
-    
-    
     $( document ).ready(function() {
-    	$('.modal-trigger').leanModal({
+    	/* $('.modal-trigger').leanModal({
     		dismissible: false
-    	});
+    	}); */
     	 /* $('#li_reg_post').click(function() {
     		 $('#modal2').leanModal({
                  dismissible: false, // Modal can be dismissed by clicking outside of the modal
@@ -760,9 +486,10 @@
     });
     
     /**
-     * 
-     *
-     *
+     * 상단 아이콘 설정
+     * - 글감등록
+     * - 로그인 아이콘
+     * - 로그인 정보 표시
      */
     var headerIcon = new Vue({
     	el : "#ul_header_icon"
@@ -771,7 +498,13 @@
     		, profile : {}
     	}
     	, mounted : function(e) {
-    		console.log('mounted');		
+    		console.log('mounted');
+    		
+    		console.log('팝업창 init');
+    		$('.modal-trigger').leanModal({
+				dismissible: false
+        	});
+    		
 	    	this.getProfile();
     	}
     	, methods : {
@@ -857,16 +590,15 @@
     				that.signout();
     				
     			}
-    			
-    			
-    			
-    			
     		}
     	}
     });
     
-    
-    var app2 = new Vue({
+    /**
+     * 글감등록 팝업
+     * [TK Yoon 2018. 12. 23. 오전 7:34:57]
+     */
+    var postPopup = new Vue({
 		el: '#modal-fixed-footer'
 		, data: {
 			title : ''
@@ -878,20 +610,7 @@
 			, result : ''
 		}
     	, methods: {
-    		preview : function(e) {
-    			var multiLine = this.contents.split("\n");
-    			console.log(multiLine)
-    			
-    			for(var i=0; i < multiLine.length; i++) {
-    				if(multiLine[i] == "") {
-    					continue;
-    				}
-    				this.preContents = this.preContents + "<br/>" + this.line + " : " + multiLine[i];
-    				this.line++;
-    			}
-    			
-    		}
-	    	, save : function(e) {
+    		save : function(e) {
 	    		console.log('save');
 	    		
 	    		var param = {
@@ -902,42 +621,102 @@
 	    		
 	    		axios.post('/posts', param)
 	    		.then(response => { 
-	    			console.log(response)
+	    			console.log(response.data)
+	    			if(response.data.code == "1") {
+		    			$('#pop_add_post').closeModal();
+		    			swal("글감등록 성공!", "", "success");
+		    			
+		    			/* postList.list.push({
+		    				title : this.title
+		    				, contents : this.contents
+		    				, quatation : this.quatation
+		    			}); */
+		    			
+		    			this.title = '';
+		    			this.contents = '';
+		    			this.quatation = '';
+		    			//postList.getPostList();
+		    			
+		    			
+		    			
+	    			} else {
+	    				swal("글감등록 실패!", response.data.msg, "error");
+	    				
+	    			}
 	    		})
 	    		.catch(error => {
-	    		    console.log(error.response);
-	    		    var data = error.response.data;
+	    		    console.log(error);
+	    		    var data = error;
 	    		    alert(data.msg);
 	    		    return;
 	    		});
 
             }
 	    		
-	    	, saveCallback : function(data) {
-	    		console.log('saveCallback');
-	    		console.log(data);
-	    		$('#modal2').closeModal();
-	    	}
 	    	, cancel : function(e) {
 	    		console.log('cancel');
-	    		swal({   title: "An input!",   
-                    text: "Write something interesting:",   
-                    type: "input",   showCancelButton: true,   
-                    closeOnConfirm: false,   
-                    animation: "slide-from-top",   
-                    inputPlaceholder: "Write something" }, 
-                    function(inputValue){   
-                        if (inputValue === false) return false;      
-                        if (inputValue === "") {     
-                        swal.showInputError("You need to write something!");     
-                        return false   
-                        }      
-                   swal("Nice!", "You wrote: " + inputValue, "success"); 
-               });
-	    		//e.target.click();
+	    		$('#pop_add_post').closeModal();
 	    	}
     	}
 	});
+    
+    /**
+     * 글감  조회
+     */
+    var postList = new Vue({
+		el: '#div_blog_posts'
+		, data: {
+			searchWord : ''
+			, list : []
+		}
+    	, mounted : function(e) {
+    		console.log('list mounted')
+    		this.getPostList();
+    	}
+    	, methods: {
+    		getPostList : function(e) {
+	    		console.log('list');
+	    		
+	    		var param = {
+    				title : this.title
+    				, contents : this.contents
+    				, quatation : this.quatation
+	    		}
+	    		
+	    		axios.get('/posts', param)
+	    		.then(response => { 
+	    			console.log(response.data)
+	    			
+	    			if(response.data.code == "1") {
+	    				this.list = response.data.data;
+	    				
+	    				//목록 ui
+	    				var $containerBlog = $("#div_blog_posts");
+	    			    $containerBlog.imagesLoaded(function() {
+	    			      $containerBlog.masonry({
+	    			        itemSelector: ".blog",
+	    			        columnWidth: ".blog-sizer",
+	    			      });
+	    			    });
+		    			
+	    			} else {
+	    				
+	    				
+	    			}
+	    			
+	    		})
+	    		.catch(error => {
+	    		    console.log(error);
+	    		    /* var data = error.response.data;
+	    		    alert(data.msg); */
+	    		    return;
+	    		});
+
+            }
+    	}
+	});
+    
+    
     </script>
 
 

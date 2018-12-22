@@ -29,7 +29,7 @@ nav {
 .card-action-buttons {
 	position: absolute;
     float: right;
-    bottom: 28px;
+    bottom: 12px;
     right: 0px;
 }
 
@@ -45,6 +45,38 @@ nav {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis
+}
+
+.title-ellipsis {
+	display: inline-block;
+	/* width: 200px; */
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis; /* 여러 줄 자르기 추가 스타일 */
+	white-space: normal;
+	line-height: 1.2;
+	/* height: 3.6em; */
+	text-align: left;
+	word-wrap: break-word;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+}
+
+.contents-ellipsis {
+	display: inline-block;
+	/* width: 200px; */
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis; /* 여러 줄 자르기 추가 스타일 */
+	white-space: normal;
+	line-height: 1.2;
+	/* height: 12.6em; */
+	text-align: left;
+	word-wrap: break-word;
+	display: -webkit-box;
+	-webkit-line-clamp: 8;
+	-webkit-box-orient: vertical;
 }
 
 .modal .modal-content {

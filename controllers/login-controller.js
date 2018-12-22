@@ -41,7 +41,8 @@ router.post('/signin', function(req, res) {
 	    		accessModel.insertAccessLog(req.body.userId, true, util.getClientIp(req));
 	    		
 	    		log.info('세션 생성 %s %s', user.userId, user.userNm);
-	    		req.session.userId = user.userId;
+	    		//req.session.userId = user.userId;
+	    		req.session.userId = user._id;
 	    		req.session.userNm = user.userNm;
 	    		return retObj.returnSuccessRes(res, bizNm + '성공', user);
 	    		
@@ -108,7 +109,8 @@ router.post('/social/signin', function(req, res) {
 			    	}
 					
 					log.info('세션 생성 %s %s', user.userId, user.userNm);
-					req.session.userId = user.userId;
+					//req.session.userId = user.userId;
+					req.session.userId = user._id;
 					req.session.userNm = user.userNm;
 					req.session.profile = user;
 					
@@ -130,7 +132,8 @@ router.post('/social/signin', function(req, res) {
 			    	log.debug('signedUser %j', user);
 			    	
 			    	log.info('세션 생성 %s %s', user.userId, user.userNm);
-					req.session.userId = user.userId;
+					//req.session.userId = user.userId;
+			    	req.session.userId = user._id;
 					req.session.userNm = user.userNm;
 					req.session.profile = user;
 					

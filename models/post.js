@@ -11,7 +11,7 @@ var postSchema = new mongoose.Schema({
     , quatation			: String
 	, isPublic			: { type: Boolean, default: false }
 	, tag				: [String]
-	, regId				: String
+	, regId				: { type: mongoose.Schema.Types.ObjectId, ref : 'user' }
 	, regDate			: { type: Date, default: Date.now }
 	, modDate			: { type: Date, default: Date.now }
 	, todayPostDate		: String
