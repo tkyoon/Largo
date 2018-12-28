@@ -237,8 +237,9 @@
             		<!-- start blog list -->
 		            <div id="div_blog_posts" class="row">
 		                <div class="blog-sizer"></div>
-		
-		                <div class="blog" v-for="post in list.posts">
+
+
+		                <div class="blog" v-for="post in list.posts" v-bind:key="post._id">
 		                    <div class="card">
 		                        <ul class="card-action-buttons">
 		                            <li>
@@ -632,9 +633,16 @@
 		    				, quatation : this.quatation
 		    			}); */
 		    			
-		    			this.title = '';
-		    			this.contents = '';
-		    			this.quatation = '';
+		    			
+		    			console.log(headerIcon.profile)
+		    			response.data.data.regId = headerIcon.profile; 
+		    			console.log(response.data.data)
+		    			postList.list.posts.unshift(response.data.data);
+		    			//postList.list.posts.splice(1, 0, response.data.data);
+		    			
+		    			//this.title = '';
+		    			//this.contents = '';
+		    			//this.quatation = '';
 		    			//postList.getPostList();
 		    			
 		    			
@@ -678,9 +686,13 @@
 	    		console.log('list');
 	    		
 	    		var param = {
-    				title : this.title
-    				, contents : this.contents
-    				, quatation : this.quatation
+					params : {
+	    				title : this.title
+	    				, contents : this.contents
+	    				, quatation : this.quatation
+	    				, page : 1
+	    				, rows : 5
+					}
 	    		}
 	    		
 	    		axios.get('/posts', param)
