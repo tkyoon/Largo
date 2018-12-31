@@ -239,7 +239,7 @@
 		                <div class="blog-sizer"></div>
 
 
-		                <div class="blog" v-for="post in list.posts" v-bind:key="post._id">
+		                <div class="blog" v-for="post in list" v-bind:key="post._id">
 		                    <div class="card">
 		                        <ul class="card-action-buttons">
 		                            <li>
@@ -397,6 +397,15 @@
   {{ info }}
 </div> -->
 
+<div>
+	<ul id="example-1">
+		<li v-for="item in items">
+		    {{ item.message }}
+		  </li>
+		  <button @click="add"></button>
+	</ul>
+</div>
+
   <!-- START FOOTER -->
   <footer class="page-footer">
     <div class="footer-copyright">
@@ -452,6 +461,24 @@
     
     
     <script type="text/javascript">
+    
+    var example1 = new Vue({
+    	  el: '#example-1',
+    	  data: {
+    	    items: [
+    	      { message: 'Foo', id:"1" },
+    	      { message: 'Bar', id:"2" }
+    	    ]
+    	  }
+    	, methods : {
+    		add : function(e) {
+    			console.log("add");
+    			console.log(e);
+    			example1.items.unshift({message:"aaaa", id:"3"})
+    			
+    		}
+    	} 
+    	})
     
     $( document ).ready(function() {
     	/* $('.modal-trigger').leanModal({
@@ -634,10 +661,11 @@
 		    			}); */
 		    			
 		    			
-		    			console.log(headerIcon.profile)
+		    			//console.log(headerIcon.profile)
 		    			response.data.data.regId = headerIcon.profile; 
 		    			console.log(response.data.data)
-		    			postList.list.posts.unshift(response.data.data);
+		    			postList.list.unshift(response.data.data);
+		    			postList.refresh();
 		    			//postList.list.posts.splice(1, 0, response.data.data);
 		    			
 		    			//this.title = '';
@@ -700,16 +728,10 @@
 	    			console.log(response.data)
 	    			
 	    			if(response.data.code == "1") {
-	    				this.list = response.data.data;
+	    				console.log(response.data.data.posts)
+	    				this.list = response.data.data.posts;
 	    				
-	    				//목록 ui
-	    				var $containerBlog = $("#div_blog_posts");
-	    			    $containerBlog.imagesLoaded(function() {
-	    			      $containerBlog.masonry({
-	    			        itemSelector: ".blog",
-	    			        columnWidth: ".blog-sizer",
-	    			      });
-	    			    });
+	    				postList.refresh();
 		    			
 	    			} else {
 	    				
@@ -725,10 +747,21 @@
 	    		});
 
             }
+    		, refresh : function(e) {
+    			console.log('list refresh')
+				var $containerBlog = $("#div_blog_posts");
+    			$containerBlog.masonry('destroy');
+    			
+    			//목록 ui
+			    $containerBlog.imagesLoaded(function() {
+					$containerBlog.masonry({
+						itemSelector: ".blog",
+						columnWidth: ".blog-sizer",
+					});
+			    });
+    		}
     	}
 	});
-    
-    
     </script>
 
 
