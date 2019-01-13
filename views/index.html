@@ -399,11 +399,9 @@
         	<div class="row">
             	<form class="col s12">
                 <div class="row">
-                	<div class="input-field col s12">
-                    	동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리 나라만세
-					</div>
+                	<div id="div_org_text" class="input-field col s12">동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리 나라만세</div>
                     <div class="input-field col s12">
-                    	<input id="ipt_line" type="text" class="validate" placeholder="필사해보아요!">
+                    	<input id="ipt_line" type="text" class="validate" placeholder="필사해보아요!" @keyup="typing" v-model="text">
 					</div>
 				</div>
 				</form>
@@ -794,10 +792,63 @@
     var transcribePopup = new Vue({
 		el: '#div_transcribe_popup'
 		, data: {
-			
+			text : ''
 		}
     	, methods: {
-    		save : function(e) {
+    		typing :  function(e) {
+	    		console.log('typing', e);
+	    		console.log(this.text);
+	    		
+	    		var orgText = $('#div_org_text').text(); //입력할 텍스트
+	    		
+	    		var inputTextLength = this.text.length;
+	    		
+	    		var tempText = orgText.substring(0, inputTextLength);
+	    		
+	    	    var contentTotal = ""
+	    	    var orgTextLength = orgText.length;
+	    	    //console.info($(this).val());   
+	    	    for (i=0 ; i < orgTextLength ; i++) {
+					if (i < this.text.length) {
+	    	        	//console.info(writeStr.slice(i,i+1));
+	    	        	if (orgText.slice(i, i+1) == this.text.slice(i, i+1)) {
+	    	          		contentTotal += orgText.slice(i, i+1);
+	    	          
+	    	        	} else {
+							contentTotal += "<font style='background-color:#f5a0ce;'>"+ orgText.slice(i, i+1) +"</font>";
+	    	          
+						}
+	    	        	
+					} else {
+						contentTotal += orgText.slice(i, i+1);
+	    	        
+					}	
+					
+				}
+	    	    
+	    	    //console.log(contentTotal);
+	    	    $("#div_org_text").html(contentTotal);
+	    	    return;
+	    	    
+	    	    //$(this).parent().prev().html(contentTotal);
+	    		
+	    		
+	    		//background 색상변경
+	    		
+    			console.log("org text => ", orgText);
+    			console.log("input text => ", this.text);
+    			console.log("temp text => ", tempText);
+	    		if(this.text == tempText){
+	    			console.log('같네요');
+	    			
+	    			
+	    		} else {
+	    			console.log('달라요');
+	    		
+	    		}
+    			
+    		}
+    		, save : function(e) {
 	    		console.log('save');
 	    		
 	    		var param = {
