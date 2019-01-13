@@ -29,7 +29,7 @@ nav {
 .card-action-buttons {
 	position: absolute;
     float: right;
-    bottom: 12px;
+    bottom: 25px;
     right: 0px;
 }
 
@@ -85,4 +85,8 @@ nav {
 
 textarea.materialize-textarea {
     min-height: 14rem;
+}
+
+footer {
+    padding-left: 0px;
 }

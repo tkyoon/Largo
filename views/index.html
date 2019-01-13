@@ -243,25 +243,25 @@
 		                    <div class="card">
 		                        <ul class="card-action-buttons">
 		                            <li>
-		                            	<a class="btn-floating waves-effect waves-light green accent-4"><i class="mdi-av-play-arrow"></i></a>
+		                            	<a @click="transcribe(post._id)" class="btn-floating waves-effect waves-light green accent-4"><i class="mdi-editor-border-color"></i></a>
 		                            </li>                            
 		                        </ul>
 		                        <div class="card-content">
 		                            <p class="row">
-		                              <span class="left title-ellipsis"><a href="#" @click="transcribe(post._id)">{{post.title}}</a></span>
+		                              <span class="left title-ellipsis"><a href="#" @click="transcribeView(post._id)">{{post.title}}</a></span>
 		                            </p>
 		                            <h1 class="card-title grey-text text-darken-4 contents-ellipsis">
 		                            	<a href="#" class="grey-text text-darken-4">
 		                            		{{post.contents}}
 		                            	</a>
 		                            </h1>
-		                            <p class="blog-post-content grey-text text-darken-1 text-ellipsis">출처 : {{post.quatation}}</p>
+		                            <p class="blog-post-content grey-text text-darken-1 text-ellipsis">By : {{post.quatation}}</p>
 		                            <div class="row">
 		                              <div class="col s3">
 		                                <!-- <img src="images/avatar.jpg" alt="" class="circle responsive-img valign profile-image"> -->
 		                                <img :src="post.regId.profileImage" alt="" class="circle responsive-img valign profile-image">
 		                              </div>
-		                              <div class="col s9"> By <a href="#">{{post.regId.userNm}}</a><br/>{{post.regDate}}</div>
+		                              <div class="col s9"> By <a href="#">{{post.regId.userNm}}</a><br/>{{post.regDate | moment}}</div>
 		                            </div>
 		                        </div>
 		                        <!-- <div class="card-reveal">
@@ -376,8 +376,8 @@
 
 				</div>
 				<div class="modal-footer">
-	                <a id="a_reg_post" href="#" class="waves-effect waves-red btn-flat modal-action" @click.prevent="save">저장</a>
 	                <a id="a_cancel_post" href="#" class="waves-effect waves-green btn-flat modal-action modal-close" @click="cancel">취소</a>
+	                <a id="a_reg_post" href="#" class="waves-effect waves-red btn-flat modal-action" @click.prevent="save">저장</a>
 				</div>
 			</div>
 		</div>
@@ -388,7 +388,7 @@
 <!-- START : 필사작성 팝업 -->
 <div>
 	<div class="row">
-    	<div class="col">
+    	<div class="col l12">
         	<div id="div_transcribe_popup" class="modal modal-fixed-footer modal-close">
             	<div class="modal-content">
 
@@ -398,10 +398,13 @@
     	<div class="col s12">
         	<div class="row">
             	<form class="col s12">
-                <div class="row">
-                	<div id="div_org_text" class="input-field col s12">동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리 나라만세</div>
+                <div v-for="content in contents" class="row">
+                	<div class="index">
+                	1<div id="div_org_text" class="input-field col s12" style="font-size: 25px;">{{content}}</div>
+                	</div>
+                	
                     <div class="input-field col s12">
-                    	<input id="ipt_line" type="text" class="validate" placeholder="필사해보아요!" @keyup="typing" v-model="text">
+                    	<textarea id="textarea_line" type="text" class="validate" placeholder="필사해보아요!" @keyup="typing" v-model="text"></textarea>
 					</div>
 				</div>
 				</form>
@@ -411,14 +414,46 @@
 </div>
 				</div>
 				<div class="modal-footer">
-	                <a id="a_reg_post" href="#" class="waves-effect waves-red btn-flat modal-action" @click.prevent="save">저장</a>
 	                <a id="a_cancel_post" href="#" class="waves-effect waves-green btn-flat modal-action modal-close" @click="cancel">취소</a>
+	                <a id="a_reg_post" href="#" class="waves-effect waves-red btn-flat modal-action" @click.prevent="save">저장</a>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 <!-- START : 필사작성 팝업 -->
+
+<!-- START : 필사보기팝업 -->
+<div>
+	<div class="row">
+    	<div class="col">
+        	<div id="div_transcribe_view_popup" class="modal modal-fixed-footer modal-close">
+            	<div class="modal-content">
+
+<div>
+	<h4 class="header caption" style="margin-left: 15px;"><i class="mdi-editor-format-list-numbered"></i> 글감보기</h4>
+    <div class="row" style="margin-bottom: 0px; ">
+    	<div class="col s12">
+        	<div class="row">
+            	<form class="col s12">
+                <div class="row">
+                	<div v-for="content in contents" id="div_org_text" class="input-field col s12">{{content}}</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+				</div>
+				<div class="modal-footer">
+	                <a id="a_cancel_post" href="#" class="waves-effect waves-green btn-flat modal-action modal-close" @click="cancel">닫기</a>
+	                <a id="a_transcribe" href="#" class="waves-effect waves-green btn-flat modal-action modal-close" @click="transcribe">필사하기</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- START : 필사보기작성 팝업 -->
 
 
 <!-- <div id="modal_login" class="modal modal-fixed-footer modal-close">
@@ -431,7 +466,7 @@
   <footer class="page-footer">
     <div class="footer-copyright">
       <div class="container">
-        <span>Copyright © 2019 <a class="grey-text text-lighten-4" href="http://themeforest.net/user/geekslabs/portfolio?ref=geekslabs" target="_blank">TK Yoon</a> All rights reserved.</span>
+        <span>Copyright © 2019 <a class="grey-text text-lighten-4" href="http://tkyoon81.blog.me" target="_blank">TK Yoon</a> All rights reserved.</span>
         <!-- <span class="right"> Design and Developed by <a class="grey-text text-lighten-4" href="http://geekslabs.com/">GeeksLabs</a></span> -->
         </div>
     </div>
@@ -472,6 +507,9 @@
     <!-- vue.js 선언 -->
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"></script>
+    
     
     
 	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -701,6 +739,12 @@
     		console.log('list mounted')
     		this.getPostList();
     	}
+    	, filters: {
+			moment: function (date) {
+    			//return moment(date).format('YYYY-MM-DD HH:mm:ss');
+    			return moment.utc(date).local().format('YYYY-MM-DD HH:mm:ss');
+			}
+    	}
     	, methods: {
     		getPostList : function(e) {
 	    		console.log('list');
@@ -739,13 +783,68 @@
 	    		});
 
             }
-    		, getPostInfo : function(postId) {
+    		, refresh : function(e) {
+    			console.log('list refresh')
+				var $containerBlog = $("#div_blog_posts");
+    			$containerBlog.masonry('destroy');
+    			
+    			//목록 ui
+			    $containerBlog.imagesLoaded(function() {
+					$containerBlog.masonry({
+						itemSelector: ".blog",
+						columnWidth: ".blog-sizer",
+					});
+			    });
+    		}
+    		, transcribeView : function(postId) {
+    			console.log('transcribe id=', postId);
+    			
+    			//1.글감상세조회
+    			transcribeViewPopup.getPostInfo(postId);
+    			$('#div_transcribe_view_popup').openModal();
+    		}
+    		, transcribe : function(postId) {
+    			console.log('transcribe id=', postId);
+    			
+    			//1.글감상세조회
+    			transcribeViewPopup.getPostInfo(postId);
+    			$('#div_transcribe_popup').openModal();
+    		}
+    	}
+	});
+    
+    /**
+     * 필사보기 팝업
+     * [TK Yoon 2019. 1. 13. 오후 7:54:57]
+     */ 
+    var transcribeViewPopup = new Vue({
+		el: '#div_transcribe_view_popup'
+		, data: {
+			postId : ''
+			, contents : []
+		}
+    	, methods: {
+    		getPostInfo : function(postId) {
     			console.log('getPostInfo');
+    			this.postId = postId;
+    			
     			axios.get('/posts/' + postId)
 	    		.then(response => { 
 	    			console.log(response.data)
 	    			if(response.data.code == "1") {
 	    				console.log('글감상세조회 성공 ', response.data.data);
+	    				var contents = response.data.data.contents;
+	    				this.contents = contents.split('\n');
+	    				console.log(this.contents)
+	    				var contents = new Array();
+			    		for (var i = 0; i < this.contents.length; i++) {
+			    			if("" != this.contents[i]) {
+			    				contents.push(this.contents[i]);
+			    			}
+							
+						}
+			    		
+			    		transcribePopup.contents = contents;
 		    			
 	    			} else {
 	    				swal("글감상세조회 실패!", response.data.msg, "error");
@@ -760,28 +859,25 @@
 	    		    return;
 	    		});
     		}
-    		, refresh : function(e) {
-    			console.log('list refresh')
-				var $containerBlog = $("#div_blog_posts");
-    			$containerBlog.masonry('destroy');
-    			
-    			//목록 ui
-			    $containerBlog.imagesLoaded(function() {
-					$containerBlog.masonry({
-						itemSelector: ".blog",
-						columnWidth: ".blog-sizer",
-					});
-			    });
-    		}
-    		, transcribe : function(postId) {
-    			console.log('transcribe id=', postId);
-    			
-    			//1.글감상세조회
-    			this.getPostInfo(postId);
-    			
-    			
-    			$('#div_transcribe_popup').openModal();
-    		}
+	    	, transcribe : function(e) {
+	    		$('#div_transcribe_view_popup').closeModal();
+	    		$('#div_transcribe_popup').openModal();
+	    		
+	    		var contents = new Array();
+	    		for (var i = 0; i < this.contents.length; i++) {
+	    			if("" != this.contents[i]) {
+	    				contents.push(this.contents[i]);
+	    			}
+					
+				}
+	    		
+	    		transcribePopup.contents = contents;
+	    		
+	    	}
+	    	, cancel : function(e) {
+	    		console.log('cancel');
+	    		$('#div_transcribe_view_popup').closeModal();
+	    	}
     	}
 	});
     
@@ -793,7 +889,12 @@
 		el: '#div_transcribe_popup'
 		, data: {
 			text : ''
+			, contents : []
 		}
+    	, mounted: function(e) {
+    		console.log("mounted")
+    		console.log(transcribeViewPopup.postId)
+    	}
     	, methods: {
     		typing :  function(e) {
 	    		console.log('typing', e);
@@ -875,8 +976,6 @@
 		    			this.quatation = '';
 		    			//postList.getPostList();
 		    			
-		    			
-		    			
 	    			} else {
 	    				swal("글감등록 실패!", response.data.msg, "error");
 	    				
@@ -898,6 +997,7 @@
 	    	}
     	}
 	});
+    
     </script>
 
 
