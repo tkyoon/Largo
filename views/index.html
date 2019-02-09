@@ -82,10 +82,11 @@
                       <!-- <li><h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1"><img src="images/materialize-logo.png" alt="materialize logo"></a> <span class="logo-text">Materialize</span></h1></li> -->
                       <li><h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1"><img src="images/custom/ci_t.png" alt="materialize logo"></a> <span class="logo-text"></span></h1></li>
                     </ul>
+                    <!-- 상단 검색 영역
                     <div class="header-search-wrapper hide-on-med-and-down">
                         <i class="mdi-action-search"></i>
                         <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="제목과 내용으로 검색하세요."/>
-                    </div>
+                    </div> -->
                     <ul id="ul_header_icon" class="right hide-on-med-and-down">
                     	<!-- <li>
                     		<a href="javascript:void(0);" class="waves-effect waves-block waves-light translation-button" data-activates="translation-dropdown"><img src="images/flag-icons/United-States.png"></a>
@@ -317,7 +318,7 @@
             </div>
           </div>
           <!-- Floating Action Button -->
-            <div class="fixed-action-btn" style="bottom: 50px; right: 19px;">
+            <!-- <div class="fixed-action-btn" style="bottom: 50px; right: 19px;">
                 <a class="btn-floating btn-large">
                   <i class="mdi-action-stars"></i>
                 </a>
@@ -327,7 +328,7 @@
                   <li><a href="app-calendar.html" class="btn-floating green"><i class="large mdi-editor-insert-invitation"></i></a></li>
                   <li><a href="app-email.html" class="btn-floating blue"><i class="large mdi-communication-email"></i></a></li>
                 </ul>
-            </div>
+            </div> -->
             <!-- Floating Action Button -->
         </div>
         <!--end container-->
@@ -398,13 +399,14 @@
     	<div class="col s12">
         	<div class="row">
             	<form class="col s12">
-                <div v-for="content in contents" class="row">
+                <div v-for="content, index) in contents" class="row">
                 	<div class="index">
-                	1<div id="div_org_text" class="input-field col s12" style="font-size: 25px;">{{content}}</div>
+                	<div v-bind:id="'div_org_text' + index" class="input-field col s12" style="font-size: 25px;">{{content}}</div>
                 	</div>
                 	
                     <div class="input-field col s12">
-                    	<textarea id="textarea_line" type="text" class="validate" placeholder="필사해보아요!" @keyup="typing" v-model="text"></textarea>
+                    	<textarea v-bind:id="'textarea_line' + index" type="text" class="col s12 validate transcribe-textarea" 
+                    		placeholder="필사해보아요!" @keydown.enter.prevent @keyup="typing" @click="focus"></textarea>
 					</div>
 				</div>
 				</form>
@@ -414,8 +416,7 @@
 </div>
 				</div>
 				<div class="modal-footer">
-	                <a id="a_cancel_post" href="#" class="waves-effect waves-green btn-flat modal-action modal-close" @click="cancel">취소</a>
-	                <a id="a_reg_post" href="#" class="waves-effect waves-red btn-flat modal-action" @click.prevent="save">저장</a>
+	                <a id="a_cancel_post" href="#" class="waves-effect waves-green btn-flat modal-action modal-close" @click="cancel">확인</a>
 				</div>
 			</div>
 		</div>
@@ -755,7 +756,7 @@
 	    				, contents : this.contents
 	    				, quatation : this.quatation
 	    				, page : 1
-	    				, rows : 5
+	    				, rows : 1000000
 					}
 	    		}
 	    		
@@ -835,7 +836,7 @@
 	    				console.log('글감상세조회 성공 ', response.data.data);
 	    				var contents = response.data.data.contents;
 	    				this.contents = contents.split('\n');
-	    				console.log(this.contents)
+	    				//console.log(this.contents)
 	    				var contents = new Array();
 			    		for (var i = 0; i < this.contents.length; i++) {
 			    			if("" != this.contents[i]) {
@@ -845,6 +846,7 @@
 						}
 			    		
 			    		transcribePopup.contents = contents;
+			    		
 		    			
 	    			} else {
 	    				swal("글감상세조회 실패!", response.data.msg, "error");
@@ -876,7 +878,10 @@
 	    	}
 	    	, cancel : function(e) {
 	    		console.log('cancel');
+	    		this.postId = '';
+	    		this.contents = [];
 	    		$('#div_transcribe_view_popup').closeModal();
+	    		
 	    	}
     	}
 	});
@@ -892,31 +897,122 @@
 			, contents : []
 		}
     	, mounted: function(e) {
-    		console.log("mounted")
+    		console.log("필사등록 팝업 - transcribePopup mounted")
     		console.log(transcribeViewPopup.postId)
     	}
     	, methods: {
-    		typing :  function(e) {
-	    		console.log('typing', e);
-	    		console.log(this.text);
+    		focus :  function(e) {
+    			console.log('focus', e)
+    			if(e.target == null) {
+    				e.target = e;
+    			}
+    			
+    			console.log($(e.target).parent().prev().find("div").height());
+    			var divHeight = $(e.target).parent().prev().find("div").height();
+    			$(e.target).parent().prev().find("div").addClass("focus-color");
+    			$(e.target).height(divHeight);
+    			
+    		}
+    		, typing :  function(e) {
+	    		//console.log('typing', e);
+	    		//console.log('typing keycode', e);
+	    		//console.log(this.text);
+	    		//console.log($(e.target).val());
+	    		var orgTextObj 		= $(e.target).parent().prev().find("div");
+	    		var orgText 		= orgTextObj.text(); //입력할 텍스트
+	    		var orgTextLength 	= orgText.length;
+	    		var inputText 		= $(e.target).val(); //입력한 텍스트
+	    		var contentTotal 	= ""
 	    		
-	    		var orgText = $('#div_org_text').text(); //입력할 텍스트
+	    		if(e.key == 'Enter') {
+	    			console.log('enter keyup')
+	    			console.log(orgText)
+	    			console.log(inputText)
+	    			if(orgText == inputText) {
+	    				console.log('다음줄로 갑시다.', $(e.target).attr("id"));
+	    				
+	    				orgTextObj.css("color", "#000");
+	    				
+	    				$(e.target).addClass("complete");
+	    				$(e.target).attr("disabled", "disabled");
+	    				
+	    				var idx = $(e.target).attr("id").replace("textarea_line", "");
+	    				
+	    				idx = parseInt(idx) + 1;
+	    				
+	    				//다 썼는지 확인
+	    				console.log(this.contents.length)
+	    				console.log(idx-1)
+	    				if(this.contents.length == idx) {
+	    					var cnt = $("#textarea_line*").length;
+	    					var isFinish = true;
+	    					for (var i = 0; i < cnt; i++) {
+		    					disabled = $("#textarea_line" + i).attr("disabled")
+		    					if(disabled != "disabled") {
+		    						isFinish = false;	
+		    					}
+							}
+	    					
+	    					if(isFinish == true) {
+	    						swal("참 잘했어요. 당신은 멋쟁이!", "", "success");
+	    						this.cancel();
+	    					}
+	    				}
+	    				
+	    				$("#textarea_line" + idx).focus();
+	    				this.focus($("#textarea_line" + idx));
+	    				
+	    			} else {
+	    				console.log('아이고 틀렸어요.');
+	    				var errorIndex = -1;
+	    				
+						for (i=0 ; i < orgTextLength ; i++) {
+							if (i < inputText.length){
+    			            	if (orgText.slice(i,i+1) == inputText.slice(i,i+1)) {
+    			              		contentTotal += orgText.slice(i,i+1);
+    			              		
+    			            	} else {
+    			              		contentTotal += "<FONT class='error-bg'>"+ orgText.slice(i,i+1) +"</font>";
+    			              		if (errorIndex == -1) errorIndex = i;
+    			              		
+    			            	}
+    			            	
+    			          	} else {
+    			            	contentTotal += "<FONT class='error-bg'>"+ orgText.slice(i,i+1) +"</font>";
+    			            	
+    			          	}	
+    			    	}
+						
+						console.log('error index =', errorIndex);
+						console.log(contentTotal);
+						console.log(orgTextObj);
+						
+						orgTextObj.html(contentTotal);
+						
+						if(errorIndex > 0) {
+							$(e.target).selectRange(errorIndex, errorIndex+1);
+							
+						} else {
+							$(e.target).selectRange(inputText.length, inputText.length);
+						}
+	    				
+	    			}
+	    			return false;
+	    		}
 	    		
-	    		var inputTextLength = this.text.length;
-	    		
+	    		 
+	    		var inputTextLength = inputText.length;
 	    		var tempText = orgText.substring(0, inputTextLength);
 	    		
-	    	    var contentTotal = ""
-	    	    var orgTextLength = orgText.length;
 	    	    //console.info($(this).val());   
 	    	    for (i=0 ; i < orgTextLength ; i++) {
-					if (i < this.text.length) {
+					if (i < inputText.length) {
 	    	        	//console.info(writeStr.slice(i,i+1));
-	    	        	if (orgText.slice(i, i+1) == this.text.slice(i, i+1)) {
+	    	        	if (orgText.slice(i, i+1) == inputText.slice(i, i+1)) {
 	    	          		contentTotal += orgText.slice(i, i+1);
 	    	          
 	    	        	} else {
-							contentTotal += "<font style='background-color:#f5a0ce;'>"+ orgText.slice(i, i+1) +"</font>";
+							contentTotal += "<font class='error-bg'>"+ orgText.slice(i, i+1) +"</font>";
 	    	          
 						}
 	    	        	
@@ -928,7 +1024,7 @@
 				}
 	    	    
 	    	    //console.log(contentTotal);
-	    	    $("#div_org_text").html(contentTotal);
+	    	    orgTextObj.html(contentTotal);
 	    	    return;
 	    	    
 	    	    //$(this).parent().prev().html(contentTotal);
@@ -949,51 +1045,11 @@
 	    		}
     			
     		}
-    		, save : function(e) {
-	    		console.log('save');
-	    		
-	    		var param = {
-    				title : this.title
-    				, contents : this.contents
-    				, quatation : this.quatation
-	    		}
-	    		
-	    		axios.post('/posts', param)
-	    		.then(response => { 
-	    			console.log(response.data)
-	    			if(response.data.code == "1") {
-		    			$('#div_post_popup').closeModal();
-		    			swal("글감등록 성공!", "", "success");
-		    			
-		    			/* postList.list.push({
-		    				title : this.title
-		    				, contents : this.contents
-		    				, quatation : this.quatation
-		    			}); */
-		    			
-		    			this.title = '';
-		    			this.contents = '';
-		    			this.quatation = '';
-		    			//postList.getPostList();
-		    			
-	    			} else {
-	    				swal("글감등록 실패!", response.data.msg, "error");
-	    				
-	    			}
-	    		})
-	    		.catch(error => {
-	    		    console.log(error.response);
-	    		    var data = error.response.data;
-	    		    $('#div_post_popup').closeModal();
-	    		    swal(data.msg, "", "error");
-	    		    return;
-	    		});
-
-            }
 	    		
 	    	, cancel : function(e) {
 	    		console.log('cancel');
-	    		$('#div_post_popup').closeModal();
+	    		this.contents = [];
+	    		$('#div_transcribe_popup').closeModal();
 	    	}
     	}
 	});
