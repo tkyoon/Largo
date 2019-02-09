@@ -406,7 +406,7 @@
                 	
                     <div class="input-field col s12">
                     	<textarea v-bind:id="'textarea_line' + index" type="text" class="col s12 validate transcribe-textarea" 
-                    		placeholder="필사해보아요!" @keydown.enter.prevent @keyup="typing" @click="focus"></textarea>
+                    		placeholder="필사해보아요!" @keydown.enter.prevent @keyup="typing" @click="focus" v-focus></textarea>
 					</div>
 				</div>
 				</form>
@@ -765,7 +765,7 @@
 	    			console.log(response.data)
 	    			
 	    			if(response.data.code == "1") {
-	    				console.log(response.data.data.posts)
+	    				//console.log(response.data.data.posts)
 	    				this.list = response.data.data.posts;
 	    				
 	    				postList.refresh();
@@ -810,6 +810,7 @@
     			//1.글감상세조회
     			transcribeViewPopup.getPostInfo(postId);
     			$('#div_transcribe_popup').openModal();
+    			
     		}
     	}
 	});
@@ -902,12 +903,16 @@
     	}
     	, methods: {
     		focus :  function(e) {
-    			console.log('focus', e)
+    			//console.log('focus', e)
+
+    			//하이라이트된 라인 삭제
+    			$(".focus-color").removeClass("focus-color");
+    			
     			if(e.target == null) {
     				e.target = e;
     			}
     			
-    			console.log($(e.target).parent().prev().find("div").height());
+    			//console.log($(e.target).parent().prev().find("div").height());
     			var divHeight = $(e.target).parent().prev().find("div").height();
     			$(e.target).parent().prev().find("div").addClass("focus-color");
     			$(e.target).height(divHeight);
@@ -925,9 +930,9 @@
 	    		var contentTotal 	= ""
 	    		
 	    		if(e.key == 'Enter') {
-	    			console.log('enter keyup')
-	    			console.log(orgText)
-	    			console.log(inputText)
+	    			//console.log('enter keyup')
+	    			//console.log(orgText)
+	    			//console.log(inputText)
 	    			if(orgText == inputText) {
 	    				console.log('다음줄로 갑시다.', $(e.target).attr("id"));
 	    				
@@ -941,8 +946,8 @@
 	    				idx = parseInt(idx) + 1;
 	    				
 	    				//다 썼는지 확인
-	    				console.log(this.contents.length)
-	    				console.log(idx-1)
+	    				//console.log(this.contents.length)
+	    				//console.log(idx-1)
 	    				if(this.contents.length == idx) {
 	    					var cnt = $("#textarea_line*").length;
 	    					var isFinish = true;
@@ -1053,6 +1058,14 @@
 	    	}
     	}
 	});
+    
+    Vue.directive('focus', {
+		// 바인딩 된 엘리먼트가 DOM에 삽입되었을 때...
+		inserted: function (el) {
+			$("#textarea_line0").focus();
+	   	 	transcribePopup.focus($("#textarea_line0"));
+		}
+   	});
     
     </script>
 
