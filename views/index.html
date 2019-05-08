@@ -466,7 +466,7 @@
   <footer class="page-footer">
     <div class="footer-copyright">
       <div class="container">
-        <span>Copyright © 2019 <a class="grey-text text-lighten-4" href="http://tkyoon81.blog.me" target="_blank">TK Yoon</a> All rights reserved.</span>
+        <span>Copyright © 2019 <a class="grey-text text-lighten-4" href="http://tkyoon81.blog.me" target="_blank">TK Yoon</a> All rights reserved. IE지원안함</span>
         <!-- <span class="right"> Design and Developed by <a class="grey-text text-lighten-4" href="http://geekslabs.com/">GeeksLabs</a></span> -->
         </div>
     </div>
@@ -522,6 +522,7 @@
     <script type="text/javascript">
     
     $( document ).ready(function() {
+    	//checkIE();
     	/* $('.modal-trigger').leanModal({
     		dismissible: false
     	}); */
@@ -1066,6 +1067,16 @@
 		}
    	});
     
+	function checkIE() {
+		var word; 
+		var agent = navigator.userAgent.toLowerCase(); 
+
+		// IE old version ( IE 10 or Lower ) 
+		if ( navigator.appName == "Microsoft Internet Explorer" || agent.search( "trident" ) > -1) {
+			alert('지원하지 않아요');
+			return;
+		}
+	}
     </script>
 
 
