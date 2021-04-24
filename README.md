@@ -1,39 +1,12 @@
-# Largo [Transcribe] Nodejs version 8.12.0
+# Largo [Transcribe] 필사의일격
 
+#### 개요
+필사의 필요성을 느껴 제작하게 됨
+필사하고 싶은 문구를 등록하고 온라인으로 필사할 수 있는 사이트
 
+#### 언어
+node.js, Express, vue.js 활용
 
-
-
-
-
-#### MongoDB Unique 설정
-* tb_user create index
- 
-```
-	pilsa.tb_user.createIndex( { userId: 1, socialType : 1 }, { unique: true } )
-```
-
-* tb_transcribe create index
- 
-```
-	pilsa.tb_transcribe.createIndex( { postId : 1, regId : 1 }, { unique: true } )
-```
-
-
-
-
-
-
-
-#### 소스 수정해야 할 부분
-* /node_models/mongoose/lib/query.js 변경해야함 2044 line count Depricated
-
-
-```javascript
-	this._collection.count(conds, options, utils.tick(callback));
-
-	=> this._collection.collection.countDocuments(conds, options, utils.tick(callback));
-```
 
 #### 데모사이트
 https://pilsa.herokuapp.com
