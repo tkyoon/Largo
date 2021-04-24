@@ -5,7 +5,7 @@
 필사하고 싶은 문구를 등록하고 온라인으로 필사할 수 있는 사이트
 
 #### 언어
-node.js, Express, vue.js 활용
+node.js, Express, vue.js, MongoDB, mongoose
 
 
 #### 데모사이트
